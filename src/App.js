@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Provider } from 'react-redux'
+import { ToastProvider } from 'react-toast-notifications';
+import initStore from './store'
+
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import ServiceApp from 'ServiceApp';
+
+import { onAuthStateChange, storeAuthUser } from 'actions';
+
+// React Component
+// functional component
+const store = initStore()
+
+class App extends React.Component {
+
+  componentDidMount() {
+    // this.unsubscribeAuth = onAuthStateChange(authUser => {
+    //   store.dispatch(storeAuthUser(authUser))
+
+    // })
+    onAuthStateChange(authUser => {
+      store.dispatch(storeAuthUser(authUser))
+
+      // if (authUser) {
+      //   store.dispatch(subscribeToMessages(authUser.uid))}
+      })
+  }
+
+  // componentWillMount() {
+  //   this.unsubscribeAuth()
+  // }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <ToastProvider>
+          <Router>
+            <ServiceApp />
+          </Router>
+        </ToastProvider>
+      </Provider>
+    );
+  }
 }
 
+
+
 export default App;
+

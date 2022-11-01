@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import ServiceApp from "ServiceApp";
 
-import { onAuthStateChange, storeAuthUser, sendMail } from "actions";
+import { onAuthStateChange, storeAuthUser } from "actions";
 
 // React Component
 // functional component
@@ -26,7 +26,6 @@ class App extends React.Component {
       // if (authUser) {
       //   store.dispatch(subscribeToMessages(authUser.uid))}
     });
-    sendMail();
   }
 
   // componentWillMount() {

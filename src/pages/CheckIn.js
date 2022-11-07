@@ -2,23 +2,25 @@ import withAuthorization from "components/hoc/withAuthorization";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
-const AvatarCreation = () => {
+const CheckIn = () => {
   const [redirect, setRedirect] = useState(false);
-
-  const setAvatar = () => {
+  // Possible Design Decision: an array of question pages
+  const onCheck = () => {
     // props.history.push('/')
     setRedirect(true);
+    // Backend Work with collected data
   };
+
   if (redirect) {
-    return <Navigate to="/definition" />;
+    return <Navigate to="/" />;
   }
 
   return (
     <div>
-      <p>This will be for an avatar creation</p>
-      <button onClick={setAvatar}>Go to Definition</button>
+      <p>This will be for the check-in Questions.</p>
+      <button onClick={onCheck}>Submit</button>
     </div>
   );
 };
 
-export default withAuthorization(AvatarCreation);
+export default CheckIn;

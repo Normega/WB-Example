@@ -2,7 +2,7 @@ import { SET_AUTH_USER, RESET_AUTH_STATE } from "types";
 
 import * as api from "api";
 
-export const register_ = (registerFormData) =>
+export const register = (registerFormData) =>
   api.register({ ...registerFormData });
 export const login = (loginData) => api.login({ ...loginData });
 export const onAuthStateChange = (onAuthCallback) =>

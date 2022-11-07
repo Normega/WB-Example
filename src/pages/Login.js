@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { login } from "actions";
 import { useToasts } from "react-toast-notifications";
@@ -24,13 +24,12 @@ const Login = () => {
         })
     );
   };
-
   if (redirect /*&& user has not set an avatar */) {
-    return <Navigate to="/avatar-creation" />;
+    return <Navigate to="/checkin" />;
   }
   /* else{
-    return <Navigate to="/"/>
-  }*/
+      return <Navigate to="/"/>
+    }*/
 
   return (
     <div className="auth-page">

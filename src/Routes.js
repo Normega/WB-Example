@@ -13,6 +13,7 @@ import WellnessDefinition from "pages/WBDefinition";
 
 import ServiceCreatePage from "pages/services/ServiceCreate";
 import UserServicesPage from "pages/services/UserServices";
+import CheckIn from "pages/CheckIn";
 
 const Routess = () => (
   <Routes>
@@ -28,6 +29,7 @@ const Routess = () => (
     <Route path="/secret" element={<SecretPage />} />
     <Route path="/avatar-creation" element={<AvatarCreation />} />
     <Route path="/definition" element={<WellnessDefinition />} />
+    <Route path="/checkin" element={<CheckIn />} />
   </Routes>
 );
 

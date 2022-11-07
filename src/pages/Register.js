@@ -13,7 +13,7 @@ const Register = () => {
   const [redirect, setRedirect] = useState(false);
   const { addToast } = useToasts();
 
-  const registerUser = (userData, event) => {
+  const registerUser = (userData) => {
     // props.history.push('/')
     register(userData).then(
       (_) => {
@@ -27,9 +27,12 @@ const Register = () => {
         })
     );
   };
-  if (redirect) {
-    return <Navigate to="/" />;
+  if (redirect /*&& user has not set an avatar */) {
+    return <Navigate to="/avatar-creation" />;
   }
+  /* else{
+      return <Navigate to="/"/>
+    }*/
 
   return (
     <div className="auth-page">

@@ -1493,6 +1493,11 @@ body #backtotop a {
     padding-bottom: 40px !important;
 }
 
+body #surveyElement {
+    --primary: #F39200;
+    --background-dim: white;
+}
+
 //Input placeholders
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: $placeholder;

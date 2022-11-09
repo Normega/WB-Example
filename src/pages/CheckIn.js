@@ -1,26 +1,34 @@
-import withAuthorization from "components/hoc/withAuthorization";
-import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import React, { useState, useCallback } from 'react';
+import { Navigate } from 'react-router-dom';
+import 'survey-core/defaultV2.min.css';
+import { StylesManager, Model } from 'survey-core';
+import { Survey } from 'survey-react-ui';
+import surveyJSON from 'data/survey';
+
+StylesManager.applyTheme('defaultV2');
 
 const CheckIn = () => {
-  const [redirect, setRedirect] = useState(false);
-  // Possible Design Decision: an array of question pages
-  const onCheck = () => {
-    // props.history.push('/')
-    setRedirect(true);
-    // Backend Work with collected data
-  };
+	const [redirect, setRedirect] = useState(false);
 
-  if (redirect) {
-    return <Navigate to="/" />;
-  }
+	const survey = new Model(surveyJSON);
 
-  return (
-    <div>
-      <p>This will be for the check-in Questions.</p>
-      <button onClick={onCheck}>Submit</button>
-    </div>
-  );
+	const alertResults = useCallback(sender => {
+		const results = JSON.stringify(sender.data);
+		alert(results); // alert result in JSON format
+		setRedirect(true); // redirect to main page
+	}, []);
+
+	survey.onComplete.add(alertResults);
+
+	if (redirect) {
+		return <Navigate to='/' />;
+	}
+
+	return (
+		<div id='surveyElement'>
+			<Survey model={survey} />
+		</div>
+	);
 };
 
 export default CheckIn;

@@ -117,6 +117,8 @@ export const WebDisplay = ({ prop }) => {
             paddingLeft: "10px",
             paddingRight: "10px",
             borderRight: "1px solid gray",
+            width: "20vw",
+            height: "100%",
           }}
         >
           <HexColorPicker
@@ -126,7 +128,7 @@ export const WebDisplay = ({ prop }) => {
         </div>
         <div
           style={{
-            width: "100%",
+            width: "80vw",
             height: "100%",
           }}
         >
@@ -136,7 +138,7 @@ export const WebDisplay = ({ prop }) => {
               overflowX: "auto",
               height: "100%",
               width: "100%",
-              justifyContent: styles[selected].length > 7 ? "start" : "center",
+              justifyContent: styles[selected].length > 5 ? "start" : "center",
               alignItems: "center",
             }}
           >

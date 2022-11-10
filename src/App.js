@@ -4,11 +4,12 @@ import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import initStore from "./store";
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import ServiceApp from "ServiceApp";
+import { WebDisplay } from "components/avatarPage/webpage/WebDisplay";
 
-import { onAuthStateChange, storeAuthUser, sendMail } from "actions";
+import { onAuthStateChange, storeAuthUser } from "actions";
 
 // React Component
 // functional component
@@ -26,7 +27,6 @@ class App extends React.Component {
       // if (authUser) {
       //   store.dispatch(subscribeToMessages(authUser.uid))}
     });
-    sendMail();
   }
 
   // componentWillMount() {
@@ -38,7 +38,10 @@ class App extends React.Component {
       <Provider store={store}>
         <ToastProvider>
           <Router>
-            <ServiceApp />
+            <Routes>
+              <Route path="/" element={<ServiceApp />}></Route>
+              <Route path="/avatar" element={<WebDisplay />}></Route>
+            </Routes>
           </Router>
         </ToastProvider>
       </Provider>

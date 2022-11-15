@@ -2,24 +2,33 @@ const surveyJSON = {
 	progressBarType: 'buttons',
 	showProgressBar: 'top',
 	pages: [
-		{
-			navigationTitle: 'Personal Information',
-			name: 'PersonalDetails',
-			elements: [
-				{
-					type: 'text',
-					name: 'FirstName',
-					title: 'Please enter your first name:',
-					isRequired: true,
-				},
-				{
-					type: 'text',
-					name: 'LastName',
-					title: 'Please enter your last name:',
-					isRequired: true,
-				},
-			],
-		},
+		// {
+		// 	navigationTitle: 'Wellbeing Survey',
+		// 	elements: [
+		// 		{
+		// 			name: 'wellbeing-definition',
+		// 			title: 'What does the term "Wellbeing" mean to you? How would you define it?',
+		// 			type: 'comment',
+		// 		},
+		// 		{
+		// 			name: 'wellbeing-domain-ranking',
+		// 			title: 'Please rank the following domains that is most important to your personal wellbeing.',
+		// 			isRequired: true,
+		// 			type: 'ranking',
+		// 			choices: [
+		// 				{ value: 'Happiness' },
+		// 				{ value: 'Physical Health' },
+		// 				{ value: 'Mental Health' },
+		// 				{ value: 'Close Social Relationship' },
+		// 				{ value: 'Financial and Material Stability' },
+		// 				{ value: 'Employment' },
+		// 				{ value: 'Family' },
+		// 				{ value: 'Meaning and Purpose of Life' },
+		// 				{ value: 'Self-Esteem' },
+		// 			],
+		// 		},
+		// 	],
+		// },
 		{
 			navigationTitle: 'Daily Mood',
 			elements: [
@@ -115,26 +124,6 @@ const surveyJSON = {
 				},
 			],
 			showQuestionNumbers: 'off',
-		},
-		{
-			navigationTitle: 'Wellbeing Ranking',
-			elements: [
-				{
-					name: 'wellbeing-domain-ranking',
-					title: 'Please rank the following domains that is most important to your personal wellbeing.',
-					isRequired: true,
-					type: 'ranking',
-					choices: [
-						{ value: 'Life Satisfaction' },
-						{ value: 'Physical Health' },
-						{ value: 'Close Social Relationship' },
-						{ value: 'Financial and Material Stability' },
-						{ value: 'Employment' },
-						{ value: 'Family' },
-						{ value: 'Self-Esteem' },
-					],
-				},
-			],
 		},
 		{
 			navigationTitle: 'Daily Reflection',

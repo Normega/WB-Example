@@ -29,27 +29,27 @@ const surveyJSON = {
 					title: 'How would you rate your mood today?',
 					choices: [
 						{
-							value: 'very happy',
+							value: '6',
 							imageLink: './images/very_happy.png',
 						},
 						{
-							value: 'happy',
+							value: '5',
 							imageLink: './images/happy.png',
 						},
 						{
-							value: 'neutral',
+							value: '4',
 							imageLink: './images/neutral.png',
 						},
 						{
-							value: 'sad',
+							value: '3',
 							imageLink: './images/sad.png',
 						},
 						{
-							value: 'crying',
+							value: '2',
 							imageLink: './images/crying.png',
 						},
 						{
-							value: 'angry',
+							value: '1',
 							imageLink: './images/angry.png',
 						},
 					],

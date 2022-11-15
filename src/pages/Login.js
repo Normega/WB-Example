@@ -1,21 +1,40 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { login } from "actions";
 import { useToasts } from "react-toast-notifications";
 import { Navigate } from "react-router-dom";
-
 import onlyGuest from "components/hoc/onlyGuest";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = firebase.firestore();
 
 const Login = () => {
   const [redirect, setRedirect] = useState(false);
+  const [user, setUser] = useState(null);
   const { register, handleSubmit } = useForm();
   const { addToast } = useToasts();
 
   const onLogin = (loginData) => {
     login(loginData).then(
-      (_) => setRedirect(true),
+      (_) => {
+        db.collection("profiles")
+          .where("email", "==", loginData.email)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              setUser(doc.data());
+            });
+          })
+          .catch((error) => {
+            console.log("Error getting documents: ", error);
+          })
+          .then(() => {
+            setRedirect(true);
+          });
+      },
       (errorMessage) =>
         addToast(errorMessage, {
           appearance: "error",
@@ -24,12 +43,13 @@ const Login = () => {
         })
     );
   };
-  if (redirect /*&& user has not set an avatar */) {
-    return <Navigate to="/checkin" />;
+  if (redirect) {
+    if (user.checkin) {
+      return <Navigate to="/" />;
+    } else {
+      return <Navigate to="/checkin" />;
+    }
   }
-  /* else{
-      return <Navigate to="/"/>
-    }*/
 
   return (
     <div className="auth-page">

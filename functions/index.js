@@ -1,7 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
-const cors = require("cors")({origin: true});
+const cors = require("cors")({ origin: true });
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -29,7 +29,6 @@ exports.sendMail = functions.https.onRequest((req, res) => {
                 <br />
             `,
     };
-
     // returning result
     return transporter.sendMail(mailOptions, (erro, info) => {
       if (erro) {
@@ -39,3 +38,22 @@ exports.sendMail = functions.https.onRequest((req, res) => {
     });
   });
 });
+
+/*
+ * a scheduled function to reset the check-in status every 6am in the local timezone
+ */
+exports.resetCheckin = functions.pubsub
+  .schedule("every day 06:00")
+  .timeZone("America/Toronto")
+  .onRun((context) => {
+    admin
+      .firestore()
+      .collection("profiles")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({ checkin: false });
+        });
+      });
+    return null;
+  });

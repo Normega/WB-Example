@@ -30,9 +30,6 @@ const Register = () => {
   if (redirect /*&& user has not set an avatar */) {
     return <Navigate to="/avatar-creation" />;
   }
-  /* else{
-      return <Navigate to="/"/>
-    }*/
 
   return (
     <div className="auth-page">

@@ -2,24 +2,33 @@ const surveyJSON = {
 	progressBarType: 'buttons',
 	showProgressBar: 'top',
 	pages: [
-		{
-			navigationTitle: 'Personal Information',
-			name: 'PersonalDetails',
-			elements: [
-				{
-					type: 'text',
-					name: 'FirstName',
-					title: 'Please enter your first name:',
-					isRequired: true,
-				},
-				{
-					type: 'text',
-					name: 'LastName',
-					title: 'Please enter your last name:',
-					isRequired: true,
-				},
-			],
-		},
+		// {
+		// 	navigationTitle: 'Wellbeing Survey',
+		// 	elements: [
+		// 		{
+		// 			name: 'wellbeing-definition',
+		// 			title: 'What does the term "Wellbeing" mean to you? How would you define it?',
+		// 			type: 'comment',
+		// 		},
+		// 		{
+		// 			name: 'wellbeing-domain-ranking',
+		// 			title: 'Please rank the following domains that is most important to your personal wellbeing.',
+		// 			isRequired: true,
+		// 			type: 'ranking',
+		// 			choices: [
+		// 				{ value: 'Happiness' },
+		// 				{ value: 'Physical Health' },
+		// 				{ value: 'Mental Health' },
+		// 				{ value: 'Close Social Relationship' },
+		// 				{ value: 'Financial and Material Stability' },
+		// 				{ value: 'Employment' },
+		// 				{ value: 'Family' },
+		// 				{ value: 'Meaning and Purpose of Life' },
+		// 				{ value: 'Self-Esteem' },
+		// 			],
+		// 		},
+		// 	],
+		// },
 		{
 			navigationTitle: 'Daily Mood',
 			elements: [
@@ -29,32 +38,41 @@ const surveyJSON = {
 					title: 'How would you rate your mood today?',
 					choices: [
 						{
-							value: 'very happy',
+							value: '6',
 							imageLink: './images/very_happy.png',
 						},
 						{
-							value: 'happy',
+							value: '5',
 							imageLink: './images/happy.png',
 						},
 						{
-							value: 'neutral',
+							value: '4',
 							imageLink: './images/neutral.png',
 						},
 						{
-							value: 'sad',
+							value: '3',
 							imageLink: './images/sad.png',
 						},
 						{
-							value: 'crying',
+							value: '2',
 							imageLink: './images/crying.png',
 						},
 						{
-							value: 'angry',
+							value: '1',
 							imageLink: './images/angry.png',
 						},
 					],
-					imageHeight: '150',
-					imageWidth: '150',
+					imageHeight: '100',
+					imageWidth: '100',
+					isRequired: true,
+				},
+				{
+					name: 'stress',
+					type: 'rating',
+					title: 'How would you rate your stress level today?',
+					minRateDescription: 'Not Stressed',
+					maxRateDescription: 'Extremely Stressed',
+					rateMax: 10,
 					isRequired: true,
 				},
 			],
@@ -115,26 +133,6 @@ const surveyJSON = {
 				},
 			],
 			showQuestionNumbers: 'off',
-		},
-		{
-			navigationTitle: 'Wellbeing Ranking',
-			elements: [
-				{
-					name: 'wellbeing-domain-ranking',
-					title: 'Please rank the following domains that is most important to your personal wellbeing.',
-					isRequired: true,
-					type: 'ranking',
-					choices: [
-						{ value: 'Life Satisfaction' },
-						{ value: 'Physical Health' },
-						{ value: 'Close Social Relationship' },
-						{ value: 'Financial and Material Stability' },
-						{ value: 'Employment' },
-						{ value: 'Family' },
-						{ value: 'Self-Esteem' },
-					],
-				},
-			],
 		},
 		{
 			navigationTitle: 'Daily Reflection',

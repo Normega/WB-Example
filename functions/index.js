@@ -1,7 +1,10 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
+const { getFirestore } = require("firebase-admin/firestore");
 const cors = require("cors")({ origin: true });
+import { collection, query, where } from "firebase/firestore";
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -10,6 +13,7 @@ const cors = require("cors")({ origin: true });
 //   response.send("Hello from Firebase!");
 // });
 admin.initializeApp();
+const db = getFirestore(admin);
 
 const transporter = nodemailer.createTransport({
   service: "gmail",

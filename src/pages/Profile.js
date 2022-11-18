@@ -1,5 +1,14 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import {sendMail} from "actions"
+import { set } from "react-hook-form";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
-const Profile = () => <h1>I am Profile Page</h1>
+export default function Profile() {
 
-export default Profile
+  return (
+    <div>
+      <h1>I am Profile Page </h1>
+      <button onClick={sendMail}> Click button to send email </button>
+    </div>
+  );
+}

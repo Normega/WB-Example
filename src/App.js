@@ -10,13 +10,6 @@ import ServiceApp from "ServiceApp";
 
 import { onAuthStateChange, storeAuthUser } from "actions";
 
-import { getApp } from "firebase/app";
-import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
-
-// intrument app to firebase callable functions
-// const functions = getFunctions(getApp());
-// connectFunctionsEmulator(functions, "127.0.0.1:", 5001);
-
 // React Component
 // functional component
 const store = initStore();

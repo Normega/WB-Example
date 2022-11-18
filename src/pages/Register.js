@@ -1,27 +1,35 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
-import React, { useState} from 'react'
-import RegisterForm from 'components/auth/RegisterForm'
-import { register } from 'actions'
-import { useToasts } from 'react-toast-notifications'
-import { Navigate } from 'react-router-dom'
-import onlyGuest from 'components/hoc/onlyGuest'
+import React, { useState } from "react";
+import RegisterForm from "components/auth/RegisterForm";
+import { register } from "actions";
+import { useToasts } from "react-toast-notifications";
+import { Navigate } from "react-router-dom";
+import onlyGuest from "components/hoc/onlyGuest";
 
 // import { withRouter } from 'react-router-dom'
 
 const Register = () => {
-
-  const [ redirect, setRedirect ] = useState(false)
-  const { addToast } = useToasts()
+  const [redirect, setRedirect] = useState(false);
+  const { addToast } = useToasts();
 
   const registerUser = (userData) => {
     // props.history.push('/')
-    register(userData)
-      .then(
-        _ => setRedirect(true),
-        errorMessage => addToast(errorMessage, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 3000 }))
+    register(userData).then(
+      (_) => {
+        setRedirect(true);
+      },
+      (errorMessage) =>
+        addToast(errorMessage, {
+          appearance: "error",
+          autoDismiss: true,
+          autoDismissTimeout: 3000,
+        })
+    );
+  };
+  if (redirect /*&& user has not set an avatar */) {
+    return <Navigate to="/avatar-creation" />;
   }
-  if (redirect) { return <Navigate to="/login" />}
 
   return (
     <div className="auth-page">
@@ -42,8 +50,8 @@ const Register = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 // export default withRouter(Register)
-export default onlyGuest(Register)
+export default onlyGuest(Register);

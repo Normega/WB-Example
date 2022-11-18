@@ -1,11 +1,13 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
-const express = require("express");
-// const app = express();
+import { collection, query, where } from "firebase/firestore";
 const cors = require("cors")({origin: true, allowedHeaders:
   "Content-Type, Authorization", allowedMethods: "GET, POST" });
+const { getFirestore } = require("firebase-admin/firestore");
+
 admin.initializeApp();
+const db = getFirestore(admin);
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -27,7 +29,6 @@ function prepareMail(req, res) {
                 <br />
             `,
     };
-
     // returning result
     return transporter.sendMail(mailOptions, (erro, info) => {
       if (erro) {
@@ -43,10 +44,18 @@ exports.sendMail = functions.https.onRequest((req, res) => {
   prepareMail(req, res);
 });
 
-// scheduling email
-// exports.emailSchedule = functions.pubsub.schedule("every 1 week")
-//     .onRun((context) => {
-//       this.sendMail();
-//       console.log(context);
-//       return null;
-//     });
+exports.resetCheckin = functions.pubsub
+  .schedule("every day 06:00")
+  .timeZone("America/Toronto")
+  .onRun((context) => {
+    admin
+      .firestore()
+      .collection("profiles")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({ checkin: false });
+        });
+      });
+    return null;
+  });

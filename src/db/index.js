@@ -2,19 +2,17 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 
 const db = firebase
-  .initializeApp(
-    {
-      apiKey: "AIzaSyAsBl9fCyC0OL9Mhd3DQd_zzNp-vXmVqVQ",
-      authDomain: "wellbeing-49fed.firebaseapp.com",
-      projectId: "wellbeing-49fed",
-      storageBucket: "wellbeing-49fed.appspot.com",
-      messagingSenderId: "533478110043",
-      appId: "1:533478110043:web:bac15a8264558a8678607e"
-    }
-  )
-  .firestore()
+	.initializeApp({
+		apiKey: 'AIzaSyAsBl9fCyC0OL9Mhd3DQd_zzNp-vXmVqVQ',
+		authDomain: 'wellbeing-49fed.firebaseapp.com',
+		projectId: 'wellbeing-49fed',
+		storageBucket: 'wellbeing-49fed.appspot.com',
+		messagingSenderId: '533478110043',
+		appId: '1:533478110043:web:bac15a8264558a8678607e',
+	})
+	.firestore();
 
-export default db
+export default db;
 
-const { Timestamp } = firebase.firestore
-export { Timestamp }
+const { Timestamp } = firebase.firestore;
+export { Timestamp };

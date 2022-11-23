@@ -2,7 +2,7 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import { AttributeSelector } from "./AttributeSelector";
 import { Avatar } from "../avatar/avatar";
-import { SelectedAttributeContext } from "./WebDisplay";
+import { SelectedAttributeContext } from "pages/AvatarCreation";
 import React, { useEffect, useState } from "react";
 
 /**

@@ -7,7 +7,7 @@ import initStore from "./store";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import ServiceApp from "ServiceApp";
-import { WebDisplay } from "components/avatarPage/webpage/WebDisplay";
+import { AvatarCreationPage } from "pages/AvatarCreation";
 
 import { onAuthStateChange, storeAuthUser } from "actions";
 
@@ -40,7 +40,7 @@ class App extends React.Component {
           <Router>
             <Routes>
               <Route path="/" element={<ServiceApp />}></Route>
-              <Route path="/avatar" element={<WebDisplay />}></Route>
+              <Route path="/avatar" element={<AvatarCreationPage />}></Route>
             </Routes>
           </Router>
         </ToastProvider>

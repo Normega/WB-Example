@@ -26,6 +26,16 @@ export const Avatar = ({
   noseColor,
   hairColor,
   size,
+  faceType,
+  noseType,
+  eyebrowType,
+  shirtType,
+  accessoryType,
+  eyeType,
+  mouthType,
+  hairType,
+  facialHairType,
+  earType,
 }) => {
   return (
     <div
@@ -44,22 +54,22 @@ export const Avatar = ({
         xmlns="http://www.w3.org/2000/svg"
       >
         <g className="layer1">
-          <Head faceColor={skinColor} />
+          <Head faceColor={skinColor} type={faceType} />
           <Body bodyColor={skinColor} />
         </g>
         <g className="layer2">
-          <LeftEar earColor={skinColor} />
-          <RightEar earColor={skinColor} />
-          <Shirt shirtColor={shirtColor} />
+          <LeftEar earColor={skinColor} type={earType} />
+          <RightEar earColor={skinColor} type={earType} />
+          <Shirt shirtColor={shirtColor} type={shirtType} />
         </g>
         <g className="layer3">
-          <LeftEye eyeColor={eyeColor} />
-          <RightEye eyeColor={eyeColor} />
-          <LeftEyebrow eyebrowColor={eyebrowColor} />
-          <RightEyebrow eyebrowColor={eyebrowColor} />
-          <Hair hairColor={hairColor} />
-          <Mouth mouthColor={mouthColor} />
-          <Nose noseColor={noseColor} />
+          <LeftEye eyeColor={eyeColor} type={eyeType} />
+          <RightEye eyeColor={eyeColor} type={eyeType} />
+          <LeftEyebrow eyebrowColor={eyebrowColor} type={eyebrowType} />
+          <RightEyebrow eyebrowColor={eyebrowColor} type={eyebrowType} />
+          <Hair hairColor={hairColor} type={hairType} />
+          <Mouth mouthColor={mouthColor} type={mouthType} />
+          <Nose noseColor={noseColor} type={noseType} />
         </g>
       </svg>
     </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Avatar } from "../avatar/avatar";
-import { WebDisplayMiddle } from "./WebDisplayMiddle";
+import { Avatar } from "../components/avatarPage/avatar/avatar";
+import { WebDisplayMiddle } from "../components/avatarPage/webpage/WebDisplayMiddle";
 import { createContext } from "react";
 import { useState } from "react";
-import { StyleDisplay } from "./StyleDisplay";
+import { StyleDisplay } from "../components/avatarPage/webpage/StyleDisplay";
 import { HexColorPicker } from "react-colorful";
 
 /**
@@ -13,9 +13,9 @@ import { HexColorPicker } from "react-colorful";
 
 export const SelectedAttributeContext = createContext();
 
-export const WebDisplay = ({ prop }) => {
+export const AvatarCreationPage = ({ prop }) => {
   const [selected, setSelected] = useState(0);
-  const [avatarProps, setAvatarProps] = useState({
+  const [avatarColorProps, setAvatarColorProps] = useState({
     avatarBackgroundColor: "#b0d1b9",
     skinColor: "#e29e68",
     shirtColor: "#5f3e09",
@@ -24,10 +24,22 @@ export const WebDisplay = ({ prop }) => {
     eyebrowColor: "#99562a",
     noseColor: "#99562a",
     hairColor: "#99562a",
-    size: "calc(50vh - 4px)",
   });
 
-  const selected_to_prop = {
+  const [avatarStyleProps, setAvatarStyleProps] = useState({
+    faceType: 1,
+    shirtType: 1,
+    eyeType: 1,
+    mouthType: 1,
+    eyebrowType: 1,
+    noseType: 1,
+    hairType: 1,
+    earType: 1,
+    facialHairType: 1,
+    accessoryType: 1,
+  });
+
+  const selected_to_color = {
     0: "skinColor",
     1: "noseColor",
     2: "eyebrowColor",
@@ -40,15 +52,21 @@ export const WebDisplay = ({ prop }) => {
     9: "otherColor",
   };
 
+  const selected_to_style = {
+    0: "faceType",
+    1: "noseType",
+    2: "eyebrowType",
+    3: "shirtType",
+    4: "accessoryType",
+    5: "eyeType",
+    6: "mouthType",
+    7: "hairType",
+    8: "facialHairType",
+    9: "earType",
+  };
+
   const styles = [
-    [
-      { color: "#654a80" },
-      { color: "#ed985f" },
-      { color: "#654a80" },
-      { color: "#ed985f" },
-      { color: "#654a80" },
-      { color: "#ed985f" },
-    ],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
     [{ color: "green" }, { color: "purple" }],
     [
       { color: "#654a80" },
@@ -70,10 +88,17 @@ export const WebDisplay = ({ prop }) => {
   ]; //list[list[objects]] outerlist is attribute, innerlist is different styles, object is what style includes
 
   function handleChange(color) {
-    let key = selected_to_prop[selected];
-    let new_props = { ...avatarProps };
+    let key = selected_to_color[selected];
+    let new_props = { ...avatarColorProps };
     new_props[key] = color;
-    setAvatarProps(new_props);
+    setAvatarColorProps(new_props);
+  }
+
+  function styleChange(styleNum) {
+    let key = selected_to_style[selected];
+    let new_props = { ...avatarStyleProps };
+    new_props[key] = styleNum;
+    setAvatarStyleProps(new_props);
   }
 
   return (
@@ -93,11 +118,27 @@ export const WebDisplay = ({ prop }) => {
           height: "10vh",
           backgroundColor: "#ffffff",
         }}
-      ></div>
+      >
+        <button
+          onClick={() => {
+            console.log(avatarColorProps);
+          }}
+        >
+          Submit
+        </button>
+      </div>
       <SelectedAttributeContext.Provider
         value={{ selected: selected, setSelected: setSelected }}
       >
-        <WebDisplayMiddle avatar={<Avatar {...avatarProps} />} />
+        <WebDisplayMiddle
+          avatar={
+            <Avatar
+              {...avatarColorProps}
+              {...avatarStyleProps}
+              size="calc(50vh - 4px)"
+            />
+          }
+        />
       </SelectedAttributeContext.Provider>
       <div style={{ height: "2vh" }} />
       <div
@@ -122,7 +163,7 @@ export const WebDisplay = ({ prop }) => {
           }}
         >
           <HexColorPicker
-            color={avatarProps[selected_to_prop[selected]]}
+            color={avatarColorProps[selected_to_color[selected]]}
             onChange={handleChange}
           />
         </div>
@@ -142,22 +183,16 @@ export const WebDisplay = ({ prop }) => {
               alignItems: "center",
             }}
           >
-            <StyleDisplay styles={styles[selected]} />
+            <StyleDisplay
+              curAvatarColors={avatarColorProps}
+              curAvatarStyles={avatarStyleProps}
+              styles={styles[selected]}
+              selected={selected}
+              styleChangeFunc={styleChange}
+            />
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-WebDisplay.propTypes = {
-  /**
-   * Description of prop
-   */
-  prop: PropTypes.string, //prop type
-};
-
-//default values for props
-WebDisplay.defaultProps = {
-  prop: "test",
 };

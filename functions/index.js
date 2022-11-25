@@ -1,24 +1,34 @@
+// import { collection, query, where } from "firebase/firestore";
+
+// import { getFirestore } from "firebase-admin/firestore";
+// import * as actions from "./actions/index";
+// import * as functions from 'firebase-functions'
+// import * as nodemailer from "nodemailer";
+// import * as cors from "cors";
+// import {initializeApp} from "firebase-admin";
+// import { createRequire } from 'module';
+// const require = createRequire(import.meta.url);
 const functions = require("firebase-functions");
-const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
-import { collection, query, where } from "firebase/firestore";
+const admin = require("firebase-admin");
 const cors = require("cors")({origin: true, allowedHeaders:
   "Content-Type, Authorization", allowedMethods: "GET, POST" });
-const { getFirestore } = require("firebase-admin/firestore");
-
+// const actions = require("../src/actions")
 admin.initializeApp();
-const db = getFirestore(admin);
+const db = admin.firestore();
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // use SSL
-  auth: {
-    user: "firebase@radlab.zone",
-    pass: "MFtriangle",
-  },
-});
+
 function prepareMail(req, res) {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+      user: "firebase@radlab.zone",
+      pass: "MFtriangle",
+    },
+  });
+
   cors(req, res, () => {
 
     const mailOptions = {
@@ -39,10 +49,44 @@ function prepareMail(req, res) {
   })
 
 }
+async function requestMail(email) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ dest: email }),
+    // params: JSON.stringify({ dest: "radlab.noreply@gmail.com" }),
+
+  };
+  await fetch(
+    "http://localhost:5000/wellbeing-49fed/us-central1/sendMail",
+    requestOptions
+  )
+    .then((res) => {
+      console.log(res)
+      // console.log(res.text())
+      return res.text()
+    })
+    .then((data) => {
+      console.log(data);
+      // console.log(data.json());
+    });
+  }
 
 exports.sendMail = functions.https.onRequest((req, res) => {
   prepareMail(req, res);
 });
+exports.sendCheckIn = functions.pubsub
+  .schedule("every day 06:00")
+  .timeZone("America/Toronto")
+  .onRun((context) => {
+    db
+      .collection("profiles")
+      .get()
+      .forEach((doc) => {
+        requestMail(doc.data.email)
+      });
+    return null;
+  });
 
 exports.resetCheckin = functions.pubsub
   .schedule("every day 06:00")

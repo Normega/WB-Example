@@ -1,8 +1,8 @@
-export async function sendMail() {
+export async function requestMail(email) {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ dest: "radlab.noreply@gmail.com" }),
+      body: JSON.stringify({ dest: email }),
       // params: JSON.stringify({ dest: "radlab.noreply@gmail.com" }),
 
     };

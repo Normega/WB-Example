@@ -39,21 +39,22 @@ export const StyleDisplay = ({
         let key = selected_to_style[selected];
         let new_props = { ...curAvatarStyles };
         new_props[key] = index + 1;
-        console.log(new_props);
         return (
-          <button
+          <div
             onClick={() => {
               styleChangeFunc(index + 1);
             }}
             key={index}
             style={{
-              width: "20vh",
-              height: "20vh",
+              width: "calc(20vh + 4px)",
+              height: "calc(20vh + 4px)",
               backgroundColor: elem.color,
             }}
           >
-            <Avatar {...curAvatarColors} {...new_props} size="20vh" />
-          </button>
+            <div style={{ marginLeft: "2px", marginTop: "2px" }}>
+              <Avatar {...curAvatarColors} {...new_props} size="20vh" />
+            </div>
+          </div>
         );
       })}
       <div />

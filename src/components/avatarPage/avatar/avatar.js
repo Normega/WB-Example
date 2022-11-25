@@ -45,7 +45,6 @@ export const Avatar = ({
         width: size,
         height: size,
         overflow: "hidden",
-        position: "relative",
       }}
     >
       <svg

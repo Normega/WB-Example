@@ -49,7 +49,7 @@ export const AvatarCreationPage = ({ prop }) => {
     6: "mouthColor",
     7: "hairColor",
     8: "facialHairColor",
-    9: "otherColor",
+    9: "earColor",
   };
 
   const selected_to_style = {
@@ -66,8 +66,12 @@ export const AvatarCreationPage = ({ prop }) => {
   };
 
   const styles = [
+    [{ color: "#654a80" }],
     [{ color: "#654a80" }, { color: "#ed985f" }],
-    [{ color: "green" }, { color: "purple" }],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
     [
       { color: "#654a80" },
       { color: "#ed985f" },
@@ -78,13 +82,9 @@ export const AvatarCreationPage = ({ prop }) => {
       { color: "#654a80" },
       { color: "#ed985f" },
     ],
-    [{ color: "green" }, { color: "purple" }],
-    [{ color: "green" }, { color: "purple" }],
-    [{ color: "green" }, { color: "purple" }],
-    [{ color: "green" }, { color: "purple" }],
-    [{ color: "green" }, { color: "purple" }],
-    [{ color: "green" }, { color: "purple" }],
-    [{ color: "green" }, { color: "purple" }],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
   ]; //list[list[objects]] outerlist is attribute, innerlist is different styles, object is what style includes
 
   function handleChange(color) {
@@ -122,6 +122,7 @@ export const AvatarCreationPage = ({ prop }) => {
         <button
           onClick={() => {
             console.log(avatarColorProps);
+            console.log(avatarStyleProps);
           }}
         >
           Submit
@@ -163,6 +164,7 @@ export const AvatarCreationPage = ({ prop }) => {
           }}
         >
           <HexColorPicker
+            style={{ width: "25vh", height: "25vh" }}
             color={avatarColorProps[selected_to_color[selected]]}
             onChange={handleChange}
           />

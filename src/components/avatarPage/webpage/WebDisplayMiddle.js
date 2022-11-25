@@ -53,7 +53,7 @@ export const WebDisplayMiddle = ({ avatar }) => {
       { name: "MOUTH" }, //index 6
       { name: "HAIR" }, //index 7
       { name: "FACIAL HAIR" }, //index 8
-      { name: "OTHER" }, //index 9
+      { name: "EARS" }, //index 9
     ],
   };
 

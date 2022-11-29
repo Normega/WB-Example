@@ -49,17 +49,21 @@ const CheckIn = () => {
     );
 
     const updateCheckInStatus = async () => {
+        // if the user has finished quarterly check-in, update the field from false to true
         if (isQuarterlyCheckin) {
             await updateDoc(doc(db, "profiles", uid), {
                 quarterlyCheckin: true,
             });
         }
+
+        // if the user has finished daily check-in, update the field from false to true
         await updateDoc(doc(db, "profiles", uid), {
             checkin: true,
         });
     };
 
     useEffect(() => {
+        // load survey JSON to either include or not include wellbeing quarterly survey
         const loadSurveyJSON = async () => {
             const docRef = doc(db, "profiles", uid);
             const docSnap = await getDoc(docRef);

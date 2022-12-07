@@ -11,9 +11,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export function prepareMail(req, res) {
-  cors(option, req, res, () => {
-
+export function prepareMail (req, res) {
+  cors(req, res, () => {
     const mailOptions = {
       from: "firebase@radlab.zone",
       to: req.body.dest,
@@ -29,6 +28,5 @@ export function prepareMail(req, res) {
       }
       return res.send("Sended");
     });
-  })
-
+  });
 }

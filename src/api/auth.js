@@ -16,7 +16,7 @@ export const register = async ({ email, password, fullName }) => {
 	try {
 		const res = await createUserWithEmailAndPassword(auth, email, password);
 		const { user } = res;
-		const userProfile = { uid: user.uid, fullName, email, services: [], description: '' };
+		const userProfile = { uid: user.uid, fullName, email, services: [], description: '', quarterlyCheckin: false };
 		await createUserProfile(userProfile);
 		return userProfile;
 	} catch (error) {

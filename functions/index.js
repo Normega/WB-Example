@@ -1,4 +1,4 @@
-const functions = require("firebase-functions");
+// const functions = require("firebase-functions");
 // const nodemailer = require("nodemailer");
 const admin = require("firebase-admin");
 // const cors = require("cors")({
@@ -8,18 +8,19 @@ const admin = require("firebase-admin");
 // });
 
 admin.initializeApp();
-const db = admin.firestore();
+// const db = admin.firestore();
 
-const sendMail = require('./actions/sendMail')
-const chInHelper = require('./actions/checkInHelper')
+const mailHelper = require("./actions/mailHelper");
+const chInHelper = require("./actions/checkInHelper");
 
 // Export functions
-exports.sendMail = sendMail.sendMail;
+exports.sendMail = mailHelper.sendMail;
+// exports.requestMail = mailHelper.requestMail;
+
+
 exports.sendCheckIn = chInHelper.sendCheckIn;
 exports.resetCheckin = chInHelper.resetCheckin;
 exports.resetQuarterlyCheckin = chInHelper.resetQuarterlyCheckin;
-
-
 
 
 // exports.sendCheckIn = functions.pubsub
@@ -65,3 +66,4 @@ exports.resetQuarterlyCheckin = chInHelper.resetQuarterlyCheckin;
 //             });
 //         return null;
 //     });
+

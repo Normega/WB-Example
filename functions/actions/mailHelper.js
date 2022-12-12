@@ -38,25 +38,36 @@ function prepareMail (req, res) {
         });
     });
 }
+
+async function requestMail (email) {
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        //    add more data below...
+        body: JSON.stringify({ dest: email }),
+        // params: JSON.stringify({ dest: "radlab.noreply@gmail.com" }),
+    };
+    //    change the POST link below
+    await fetch("http://localhost:5000/wellbeing-49fed/us-central1/sendMail", requestOptions)
+        .then(res => {
+            console.log(res);
+            // console.log(res.text())
+            return res.text();
+        })
+        .then(data => {
+            console.log(data);
+            // console.log(data.json());
+        });
+}
+exports.requestMail = requestMail;
+
 exports.sendMail = functions.https.onRequest((req, res) => {
     prepareMail(req, res);
 });
 
-// async function requestMail (email) {
-//     const requestOptions = {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ dest: email }),
-//         // params: JSON.stringify({ dest: "radlab.noreply@gmail.com" }),
-//     };
-//     await fetch("http://localhost:5000/wellbeing-49fed/us-central1/sendMail", requestOptions)
-//         .then(res => {
-//             console.log(res);
-//             // console.log(res.text())
-//             return res.text();
-//         })
-//         .then(data => {
-//             console.log(data);
-//             // console.log(data.json());
-//         });
-// }
+// exports.requestMail = functions.pubsub
+//     .schedule("every day 06:00")
+//     .timeZone("America/Toronto")
+//     .onRun(context => {
+//         requestMail("radlab.noreply@gmail.com");
+//     });

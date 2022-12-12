@@ -1,7 +1,7 @@
 const admin = require("firebase-admin");
 const db = admin.firestore();
 const functions = require("firebase-functions");
-
+const mailHelper = require("./mailHelper");
 
 exports.sendCheckIn = functions.pubsub
     .schedule("every day 06:00")
@@ -10,7 +10,7 @@ exports.sendCheckIn = functions.pubsub
         db.collection("profiles")
             .get()
             .forEach(doc => {
-                requestMail(doc.data.email);
+                mailHelper.requestMail(doc.data.email);
             });
         return null;
     });

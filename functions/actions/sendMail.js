@@ -1,32 +1,62 @@
-import * as nodemailer from "nodemailer";
-import * as cors from "cors";
-// place
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // use SSL
-  auth: {
-    user: "firebase@radlab.zone",
-    pass: "MFtriangle",
-  },
+const functions = require("firebase-functions");
+const nodemailer = require("nodemailer");
+// const admin = require("firebase-admin");
+const cors = require("cors")({
+    origin: true,
+    allowedHeaders: "Content-Type, Authorization",
+    allowedMethods: "GET, POST",
 });
+// Are the below neccessary?
+// admin.initializeApp();
+// const db = admin.firestore();
 
-export function prepareMail (req, res) {
-  cors(req, res, () => {
-    const mailOptions = {
-      from: "firebase@radlab.zone",
-      to: req.body.dest,
-      subject: "Wellness Buddy Check-in",
-      html: `<h1 style="font-size: 32px;"> Testing Testing </h1>
+function prepareMail (req, res) {
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // use SSL
+        auth: {
+            user: "firebase@radlab.zone",
+            pass: "MFtriangle",
+        },
+    });
+    cors(req, res, () => {
+        const mailOptions = {
+            from: "firebase@radlab.zone",
+            to: req.body.dest,
+            subject: "Wellness Buddy Check-in",
+            html: `<h1 style="font-size: 32px;"> Testing Testing </h1>
                 <br />
             `,
-    };
-    // returning result
-    return transporter.sendMail(mailOptions, (erro, info) => {
-      if (erro) {
-        return res.send(erro.toString());
-      }
-      return res.send("Sended");
+        };
+        // returning result
+        return transporter.sendMail(mailOptions, (erro, info) => {
+            if (erro) {
+                return res.send(erro.toString());
+            }
+            return res.send("Sended, requested email: " + req.body.dest);
+        });
     });
-  });
 }
+exports.sendMail = functions.https.onRequest((req, res) => {
+    prepareMail(req, res);
+});
+
+// async function requestMail (email) {
+//     const requestOptions = {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ dest: email }),
+//         // params: JSON.stringify({ dest: "radlab.noreply@gmail.com" }),
+//     };
+//     await fetch("http://localhost:5000/wellbeing-49fed/us-central1/sendMail", requestOptions)
+//         .then(res => {
+//             console.log(res);
+//             // console.log(res.text())
+//             return res.text();
+//         })
+//         .then(data => {
+//             console.log(data);
+//             // console.log(data.json());
+//         });
+// }

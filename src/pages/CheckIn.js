@@ -25,9 +25,14 @@ const CheckIn = () => {
 
             // store quarterly check-in data to quarterlyCheckIns sub-collection
             if (isQuarterlyCheckin) {
-                const quarterlySurveyJSON = (({ wellbeingDefinition, wellbeingDomainRanking }) => ({
+                const quarterlySurveyJSON = (({
                     wellbeingDefinition,
                     wellbeingDomainRanking,
+                    reminder,
+                }) => ({
+                    wellbeingDefinition,
+                    wellbeingDomainRanking,
+                    reminder,
                     date: new Date().toLocaleDateString(),
                 }))(results);
 

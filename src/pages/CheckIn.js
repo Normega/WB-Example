@@ -40,6 +40,10 @@ const CheckIn = () => {
                     collection(db, "profiles", uid, "quarterlyCheckIns"),
                     quarterlySurveyJSON
                 );
+
+                await updateDoc(doc(db, "profiles", uid), {
+                    reminder: results.reminder,
+                });
             }
 
             // store daily check-in data to checkIns sub-collection

@@ -10,10 +10,10 @@ import RegisterPage from "./pages/Register";
 import SecretPage from "pages/Secret";
 import AvatarCreation from "pages/AvatarCreation";
 import WellnessDefinition from "pages/WBDefinition";
-
 import ServiceCreatePage from "pages/services/ServiceCreate";
 import UserServicesPage from "pages/services/UserServices";
 import CheckIn from "pages/CheckIn";
+import UserDashboard from "pages/UserDashboard";
 
 const Routess = () => (
   <Routes>
@@ -30,6 +30,7 @@ const Routess = () => (
     <Route path="/avatar-creation" element={<AvatarCreation />} />
     <Route path="/definition" element={<WellnessDefinition />} />
     <Route path="/checkin" element={<CheckIn />} />
+    <Route path="/dashboard" element={<UserDashboard />} />
   </Routes>
 );
 

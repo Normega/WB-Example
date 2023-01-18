@@ -4,33 +4,47 @@ export function getSurveyJSON(quarterlyCheckin) {
     progressBarType: "buttons",
     showProgressBar: "top",
     pages: [
-      quarterlyCheckin ? {} : {
-      	navigationTitle: 'Wellbeing Survey',
-      	elements: [
-      		{
-      			name: 'wellbeingDefinition',
-      			title: 'What does the term "Wellbeing" mean to you? How would you define it?',
-      			type: 'comment',
-      		},
-      		{
-      			name: 'wellbeingDomainRanking',
-      			title: 'Please rank the following domains that is most important to your personal wellbeing.',
-      			isRequired: true,
-      			type: 'ranking',
-      			choices: [
-      				{ value: 'Happiness' },
-      				{ value: 'Physical Health' },
-      				{ value: 'Mental Health' },
-      				{ value: 'Close Social Relationship' },
-      				{ value: 'Financial and Material Stability' },
-      				{ value: 'Employment' },
-      				{ value: 'Family' },
-      				{ value: 'Meaning and Purpose of Life' },
-      				{ value: 'Self-Esteem' },
-      			],
-      		},
-      	],
-      },
+      quarterlyCheckin
+        ? {}
+        : {
+            navigationTitle: "Wellbeing Survey",
+            elements: [
+              {
+                name: "wellbeingDefinition",
+                title:
+                  'What does the term "Wellbeing" mean to you? How would you define it?',
+                type: "comment",
+                isRequired: true,
+              },
+              {
+                name: "wellbeingDomainRanking",
+                title:
+                  "Please rank the following domains that is most important to your personal wellbeing.",
+                isRequired: true,
+                type: "ranking",
+                choices: [
+                  { value: "Happiness" },
+                  { value: "Physical Health" },
+                  { value: "Mental Health" },
+                  { value: "Close Social Relationship" },
+                  { value: "Financial and Material Stability" },
+                  { value: "Employment" },
+                  { value: "Family" },
+                  { value: "Meaning and Purpose of Life" },
+                  { value: "Self-Esteem" },
+                ],
+              },
+              {
+                name: "reminder",
+                title: "When would you like to get notified?",
+                type: "text",
+                inputType: "time",
+                isRequired: true,
+                min: "06:00",
+                max: "18:00",
+              },
+            ],
+          },
       {
         navigationTitle: "Daily Mood",
         elements: [
@@ -150,8 +164,8 @@ export function getSurveyJSON(quarterlyCheckin) {
             type: "comment",
             isRequired: true,
           },
-        ]
-      }
+        ],
+      },
     ],
     showQuestionNumbers: "false",
   };

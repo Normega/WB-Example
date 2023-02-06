@@ -1,22 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { RightEyeStyle2 } from "components/avatarSvgs/rightEyeStyleSvgs/rightEyeStyle2";
+import { RightEyeStyle1 } from "components/avatarSvgs/rightEyeStyleSvgs/rightEyeStyle1";
+
 /**
  * Description of Component
  */
-export const RightEye = ({ eyeColor }) => {
-  return (
-    <ellipse
-      style={{
-        fill: eyeColor,
-        fillOpacity: 1,
-      }}
-      cx={83.612}
-      cy={65.876}
-      rx={4.117}
-      ry={4.434}
-    />
-  );
+export const RightEye = ({ eyeColor, type }) => {
+  
+  const types = {
+    1: <RightEyeStyle1 eyeColor={eyeColor} />,
+    2: <RightEyeStyle2 eyeColor={eyeColor} />,
+  };
+
+  return types[type];
 };
 
 RightEye.propTypes = {

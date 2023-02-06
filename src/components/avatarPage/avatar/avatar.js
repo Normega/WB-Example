@@ -12,6 +12,7 @@ import { RightEyebrow } from "../layer3/RightEyebrow";
 import { Hair } from "../layer3/Hair";
 import { Mouth } from "../layer3/Mouth";
 import { Nose } from "../layer3/Nose";
+import { HairBack } from "../layer1/HairBack";
 
 /**
  * Customizable character to be displayed on website
@@ -30,11 +31,9 @@ export const Avatar = ({
   noseType,
   eyebrowType,
   shirtType,
-  accessoryType,
   eyeType,
   mouthType,
   hairType,
-  facialHairType,
   earType,
 }) => {
   return (
@@ -53,15 +52,17 @@ export const Avatar = ({
         xmlns="http://www.w3.org/2000/svg"
       >
         <g className="layer1">
-          <Head faceColor={skinColor} type={faceType} />
+          {/* Hair Back */}
+          <HairBack hairColor={hairColor} type={hairType} />
           <Body bodyColor={skinColor} />
         </g>
         <g className="layer2">
+          <Head faceColor={skinColor} type={faceType} />
+        </g>
+        <g className="layer3">
           <LeftEar earColor={skinColor} type={earType} />
           <RightEar earColor={skinColor} type={earType} />
           <Shirt shirtColor={shirtColor} type={shirtType} />
-        </g>
-        <g className="layer3">
           <LeftEye eyeColor={eyeColor} type={eyeType} />
           <RightEye eyeColor={eyeColor} type={eyeType} />
           <LeftEyebrow eyebrowColor={eyebrowColor} type={eyebrowType} />

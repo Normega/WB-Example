@@ -7,7 +7,6 @@ import { useState } from "react";
  */
 export const AttributeSelector = ({
   name,
-  icon,
   color,
   height,
   updateSelected,

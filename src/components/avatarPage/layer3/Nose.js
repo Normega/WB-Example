@@ -1,6 +1,6 @@
 import React from "react";
-import { NoseStyle2 } from "components/testSvgs/noseStyles/noseStyle2";
-import { NoseStyle1 } from "components/testSvgs/noseStyles/noseStyle1";
+import { NoseStyle2 } from "components/avatarSvgs/noseStyleSvgs/noseStyle2";
+import { NoseStyle1 } from "components/avatarSvgs/noseStyleSvgs/noseStyle1";
 
 /**
  * Description of Component

@@ -1,6 +1,6 @@
 import React from "react";
-import { RightEarStyle2 } from "components/testSvgs/rightEarStyles/rightEarStyle2";
-import { RightEarStyle1 } from "components/testSvgs/rightEarStyles/rightEarStyle1";
+import { RightEarStyle2 } from "components/avatarSvgs/rightEarStyleSvgs/rightEarStyle2";
+import { RightEarStyle1 } from "components/avatarSvgs/rightEarStyleSvgs/rightEarStyle1";
 /**
  * Description of Component
  */

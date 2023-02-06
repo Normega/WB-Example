@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { HeadStyle1 } from "components/testSvgs/headStyles/headStyle1";
-import { HeadStyle2 } from "components/testSvgs/headStyles/headStyle2";
+import { HeadStyle1 } from "components/avatarSvgs/headStyleSvgs/headStyle1";
+import { HeadStyle2 } from "components/avatarSvgs/headStyleSvgs/headStyle2";
 
 /**
  * Description of Component

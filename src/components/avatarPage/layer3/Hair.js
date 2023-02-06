@@ -5,6 +5,7 @@ import { HairStyle2 } from "components/avatarSvgs/hairStyleSvgs/hairStyle2";
 import { HairStyle3 } from "components/avatarSvgs/hairStyleSvgs/hairStyle3";
 import { HairStyle4 } from "components/avatarSvgs/hairStyleSvgs/hairStyle4";
 import { HairStyle5 } from "components/avatarSvgs/hairStyleSvgs/hairStyle5";
+import { HairStyle6 } from "components/avatarSvgs/hairStyleSvgs/hairStyle6";
 
 /**
  * Description of Component
@@ -16,6 +17,7 @@ export const Hair = ({ hairColor, type }) => {
     3: <HairStyle3 hairColor={hairColor} />,
     4: <HairStyle4 hairColor={hairColor} />,
     5: <HairStyle5 hairColor={hairColor} />,
+    6: <HairStyle6 hairColor={hairColor} />,
   };
 
   return types[type];

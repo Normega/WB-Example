@@ -9,12 +9,12 @@ import { HairBackStyle2 } from "components/avatarSvgs/hairBackStyles/hairBackSty
 
 export const HairBack = ({ hairColor, type }) => {
   const types = {
-    1: <HairBackStyle2 hairColor={hairColor} />,
-    2: <HairBackStyle2 hairColor={hairColor} />,
-    3: <HairBackStyle2 hairColor={hairColor} />,
-    4: <HairBackStyle2 hairColor={hairColor} />,
-    5: <HairBackStyle2 hairColor={hairColor} />,
-    6: <HairBackStyle1 hairColor={hairColor} />,
+    1: <HairBackStyle1 hairColor={hairColor} />,
+    2: <HairBackStyle1 hairColor={hairColor} />,
+    3: <HairBackStyle1 hairColor={hairColor} />,
+    4: <HairBackStyle1 hairColor={hairColor} />,
+    5: <HairBackStyle1 hairColor={hairColor} />,
+    6: <HairBackStyle2 hairColor={hairColor} />,
   };
 
   return types[type];

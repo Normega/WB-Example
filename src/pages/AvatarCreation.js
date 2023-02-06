@@ -39,7 +39,6 @@ export const AvatarCreationPage = ({ prop }) => {
     accessoryType: 1,
   });
 
-
   const selected_to_color = {
     0: "skinColor",
     1: "noseColor",
@@ -73,11 +72,16 @@ export const AvatarCreationPage = ({ prop }) => {
     [{ color: "#654a80" }, { color: "#ed985f" }],
     [{ color: "#654a80" }, { color: "#ed985f" }],
     [{ color: "#654a80" }, { color: "#ed985f" }],
+    [{ color: "#654a80" }, { color: "#ed985f" }],
     [
       { color: "#654a80" },
       { color: "#ed985f" },
+      { color: "#654a80" },
+      { color: "#ed985f" },
+      { color: "#ed985f" },
+      { color: "#ed985f" },
+      { color: "#ed985f" },
     ],
-    [{ color: "#654a80" }, { color: "#ed985f" }, { color: "#654a80" }, { color: "#ed985f" }, { color: "#ed985f" }, { color: "#ed985f" }],
     [{ color: "#654a80" }, { color: "#ed985f" }],
     [{ color: "#654a80" }, { color: "#ed985f" }],
   ]; //list[list[objects]] outerlist is attribute, innerlist is different styles, object is what style includes
@@ -122,15 +126,15 @@ export const AvatarCreationPage = ({ prop }) => {
         >
           Submit
         </button>
-         <button
+        <button
           onClick={() => {
             let new_props = { ...avatarStyleProps };
-            for (let index = 0; index < styles.length; index++) {          
-                  let key = selected_to_style[index];
-                  console.log(key)
-                  let styleIndex = Math.floor(Math.random() * styles[index].length)
-                  console.log(styleIndex)
-                  new_props[key] = styleIndex;
+            for (let index = 0; index < styles.length; index++) {
+              let key = selected_to_style[index];
+              console.log(key);
+              let styleIndex = Math.floor(Math.random() * styles[index].length);
+              console.log(styleIndex);
+              new_props[key] = styleIndex;
             }
             setAvatarStyleProps(new_props);
           }}

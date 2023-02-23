@@ -60,6 +60,7 @@ export const Avatar = ({
           <Head faceColor={skinColor} type={faceType} />
         </g>
         <g className="layer3">
+          <Hair hairColor={hairColor} type={hairType} />
           <LeftEar earColor={skinColor} type={earType} />
           <RightEar earColor={skinColor} type={earType} />
           <Shirt shirtColor={shirtColor} type={shirtType} />
@@ -67,7 +68,6 @@ export const Avatar = ({
           <RightEye eyeColor={eyeColor} type={eyeType} />
           <LeftEyebrow eyebrowColor={eyebrowColor} type={eyebrowType} />
           <RightEyebrow eyebrowColor={eyebrowColor} type={eyebrowType} />
-          <Hair hairColor={hairColor} type={hairType} />
           <Mouth mouthColor={mouthColor} type={mouthType} />
           <Nose noseColor={noseColor} type={noseType} />
         </g>

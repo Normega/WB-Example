@@ -1,20 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { ClothesStyle1 } from "components/avatarSvgs/clothesStyleSvgs/clothesStyle1";
+import { ClothesStyle2 } from "components/avatarSvgs/clothesStyleSvgs/clothesStyle2";
+
 /**
  * Description of Component
  */
-export const Shirt = ({ shirtColor }) => {
-  return (
-    <path
-      style={{
-        display: "inline",
-        fill: shirtColor,
-        fillOpacity: 1,
-      }}
-      d="M24.77 132.207c42.046-.478 62.79.012 81.871-.565-7.907-18.89-25.528-19.973-25.528-19.973-9.304 10.36-24.379 9.238-31.297.37-25.584 7.13-25.047 20.168-25.047 20.168z"
-    />
-  );
+export const Shirt = ({ shirtColor, type }) => {
+  const types = {
+    1: <ClothesStyle1 shirtColor={shirtColor} />,
+    2: <ClothesStyle2 shirtColor={shirtColor} />,
+  };
+
+  return types[type];
 };
 
 Shirt.propTypes = {

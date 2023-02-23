@@ -8,7 +8,7 @@ import ServiceDetailPage from "./pages/ServiceDetail";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import SecretPage from "pages/Secret";
-import AvatarCreation from "pages/AvatarCreation";
+import { AvatarCreationPage } from "pages/AvatarCreation";
 import WellnessDefinition from "pages/WBDefinition";
 import ServiceCreatePage from "pages/services/ServiceCreate";
 import UserServicesPage from "pages/services/UserServices";
@@ -27,7 +27,7 @@ const Routess = () => (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/register" element={<RegisterPage />} />
     <Route path="/secret" element={<SecretPage />} />
-    <Route path="/avatar-creation" element={<AvatarCreation />} />
+    <Route path="/avatar-creation" element={<AvatarCreationPage />} />
     <Route path="/definition" element={<WellnessDefinition />} />
     <Route path="/checkin" element={<CheckIn />} />
     <Route path="/dashboard" element={<UserDashboard />} />

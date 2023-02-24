@@ -4,9 +4,10 @@ import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import initStore from "./store";
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import ServiceApp from "ServiceApp";
+import { AvatarCreationPage } from "pages/AvatarCreation";
 
 import { onAuthStateChange, storeAuthUser } from "actions";
 
@@ -37,7 +38,10 @@ class App extends React.Component {
       <Provider store={store}>
         <ToastProvider>
           <Router>
-            <ServiceApp />
+            <Routes>
+              <Route path="/" element={<ServiceApp />}></Route>
+              <Route path="/avatar" element={<AvatarCreationPage />}></Route>
+            </Routes>
           </Router>
         </ToastProvider>
       </Provider>

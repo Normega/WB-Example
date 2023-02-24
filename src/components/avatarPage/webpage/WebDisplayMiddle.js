@@ -4,6 +4,7 @@ import { AttributeSelector } from "./AttributeSelector";
 import { Avatar } from "../avatar/avatar";
 import { SelectedAttributeContext } from "pages/AvatarCreation";
 import React, { useEffect, useState } from "react";
+import { attributes } from "../avatarProps";
 
 /**
  * Description of Component
@@ -40,23 +41,6 @@ export const WebDisplayMiddle = ({ avatar }) => {
   const selected = props.selected;
   const setSelected = props.setSelected;
 
-  const attributes = {
-    left: [
-      { name: "FACE" }, //index 0
-      { name: "NOSE" }, //index 1
-      { name: "EYEBROWS" }, //index 2
-      { name: "CLOTHES" }, //index 3
-      { name: "ACCESSORIES" }, //index 4
-    ],
-    right: [
-      { name: "EYES" }, //index 5
-      { name: "MOUTH" }, //index 6
-      { name: "HAIR" }, //index 7
-      { name: "FACIAL HAIR" }, //index 8
-      { name: "EARS" }, //index 9
-    ],
-  };
-
   const { height, width } = useWindowDimensions();
 
   return (
@@ -90,8 +74,10 @@ export const WebDisplayMiddle = ({ avatar }) => {
               <AttributeSelector
                 key={index}
                 name={elem.name}
+                icon={elem.icon}
                 updateSelected={() => {
                   setSelected(index);
+                  console.log(index);
                 }}
                 isSelected={true}
               />
@@ -101,8 +87,10 @@ export const WebDisplayMiddle = ({ avatar }) => {
               <AttributeSelector
                 key={index}
                 name={elem.name}
+                icon={elem.icon}
                 updateSelected={() => {
                   setSelected(index);
+                  console.log(index);
                 }}
                 isSelected={false}
               />
@@ -141,8 +129,10 @@ export const WebDisplayMiddle = ({ avatar }) => {
               <AttributeSelector
                 key={new_index}
                 name={elem.name}
+                icon={elem.icon}
                 updateSelected={() => {
                   setSelected(new_index);
+                  console.log(index);
                 }}
                 isSelected={true}
               />
@@ -152,8 +142,10 @@ export const WebDisplayMiddle = ({ avatar }) => {
               <AttributeSelector
                 key={new_index}
                 name={elem.name}
+                icon={elem.icon}
                 updateSelected={() => {
                   setSelected(new_index);
+                  console.log(index);
                 }}
                 isSelected={false}
               />

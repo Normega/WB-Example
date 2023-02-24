@@ -1,11 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Avatar } from "../components/avatarPage/avatar/avatar";
 import { WebDisplayMiddle } from "../components/avatarPage/webpage/WebDisplayMiddle";
 import { createContext } from "react";
 import { useState } from "react";
 import { StyleDisplay } from "../components/avatarPage/webpage/StyleDisplay";
 import { HexColorPicker } from "react-colorful";
+import { styles } from "components/avatarPage/avatarProps";
+import { selected_to_color } from "components/avatarPage/avatarProps";
+import { selected_to_style } from "components/avatarPage/avatarProps";
 
 /**
  * Description of Component
@@ -35,56 +37,7 @@ export const AvatarCreationPage = ({ prop }) => {
     noseType: 1,
     hairType: 1,
     earType: 1,
-    facialHairType: 1,
-    accessoryType: 1,
   });
-
-  const selected_to_color = {
-    0: "skinColor",
-    1: "noseColor",
-    2: "eyebrowColor",
-    3: "shirtColor",
-    4: "accessoryColor",
-    5: "eyeColor",
-    6: "mouthColor",
-    7: "hairColor",
-    8: "facialHairColor",
-    9: "earColor",
-  };
-
-  const selected_to_style = {
-    0: "faceType",
-    1: "noseType",
-    2: "eyebrowType",
-    3: "shirtType",
-    4: "accessoryType",
-    5: "eyeType",
-    6: "mouthType",
-    7: "hairType",
-    8: "facialHairType",
-    9: "earType",
-  };
-
-  const styles = [
-    [{ color: "#654a80" }],
-    [{ color: "#654a80" }, { color: "#ed985f" }],
-    [{ color: "#654a80" }, { color: "#ed985f" }],
-    [{ color: "#654a80" }, { color: "#ed985f" }],
-    [{ color: "#654a80" }, { color: "#ed985f" }],
-    [{ color: "#654a80" }, { color: "#ed985f" }],
-    [{ color: "#654a80" }, { color: "#ed985f" }],
-    [
-      { color: "#654a80" },
-      { color: "#ed985f" },
-      { color: "#654a80" },
-      { color: "#ed985f" },
-      { color: "#ed985f" },
-      { color: "#ed985f" },
-      { color: "#ed985f" },
-    ],
-    [{ color: "#654a80" }, { color: "#ed985f" }],
-    [{ color: "#654a80" }, { color: "#ed985f" }],
-  ]; //list[list[objects]] outerlist is attribute, innerlist is different styles, object is what style includes
 
   function handleChange(color) {
     let key = selected_to_color[selected];

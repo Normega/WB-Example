@@ -10,8 +10,9 @@ export const AttributeSelector = ({
   color,
   height,
   updateSelected,
-  index,
   isSelected,
+  index,
+  icon,
 }) => {
   const [isHover, setIsHover] = useState(0);
   return (
@@ -45,15 +46,7 @@ export const AttributeSelector = ({
           alignItems: "center",
         }}
       >
-        <div
-          className="icon"
-          style={{
-            borderRadius: "50%",
-            backgroundColor: "#f1f1f1",
-            width: `calc(${height} - 10px)`,
-            height: `calc(${height} - 10px)`,
-          }}
-        ></div>
+        <img src={icon} style={{ width: "30px" }} />
       </div>
       <div
         className="text"

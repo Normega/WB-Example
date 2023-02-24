@@ -1,23 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Avatar } from "../avatar/avatar";
-
-/**
- * Description of Component
- */
-
-const selected_to_style = {
-  0: "faceType",
-  1: "noseType",
-  2: "eyebrowType",
-  3: "shirtType",
-  4: "accessoryType",
-  5: "eyeType",
-  6: "mouthType",
-  7: "hairType",
-  8: "facialHairType",
-  9: "earType",
-};
+import { selected_to_style } from "../avatarProps";
 
 export const StyleDisplay = ({
   styles,

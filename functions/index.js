@@ -15,7 +15,7 @@ const chInHelper = require("./actions/checkInHelper");
 
 // Export functions
 exports.sendMail = mailHelper.sendMail;
-// exports.requestMail = mailHelper.requestMail;
+exports.weeklySendMail = mailHelper.weeklySendMail;
 
 
 exports.sendCheckIn = chInHelper.sendCheckIn;

@@ -1,0 +1,35 @@
+.avatarButton {
+  background: linear-gradient(to bottom right, #3bceef, #078cad);
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.5;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  margin: 1vh;
+}
+
+.avatarButton:not([disabled]):focus {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+    -0.125rem -0.125rem 1rem rgba(68, 221, 248, 0.5),
+    0.125rem 0.125rem 1rem rgba(48, 115, 250, 0.5);
+}
+
+.avatarButton:not([disabled]):hover {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+    -0.125rem -0.125rem 1rem rgba(47, 255, 238, 0.5),
+    0.125rem 0.125rem 1rem rgba(49, 126, 202, 0.5);
+}

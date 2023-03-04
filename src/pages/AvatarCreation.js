@@ -8,6 +8,7 @@ import { HexColorPicker } from "react-colorful";
 import { styles } from "components/avatarPage/avatarProps";
 import { selected_to_color } from "components/avatarPage/avatarProps";
 import { selected_to_style } from "components/avatarPage/avatarProps";
+import "./AvatarCreation.css";
 
 /**
  * Description of Component
@@ -67,34 +68,10 @@ export const AvatarCreationPage = ({ prop }) => {
         className="header"
         style={{
           width: "100vw",
-          height: "10vh",
+          height: "5vh",
           backgroundColor: "#ffffff",
         }}
-      >
-        <button
-          onClick={() => {
-            console.log(avatarColorProps);
-            console.log(avatarStyleProps);
-          }}
-        >
-          Submit
-        </button>
-        <button
-          onClick={() => {
-            let new_props = { ...avatarStyleProps };
-            for (let index = 0; index < styles.length; index++) {
-              let key = selected_to_style[index];
-              console.log(key);
-              let styleIndex = Math.floor(Math.random() * styles[index].length);
-              console.log(styleIndex);
-              new_props[key] = styleIndex;
-            }
-            setAvatarStyleProps(new_props);
-          }}
-        >
-          Randomize
-        </button>
-      </div>
+      ></div>
       <SelectedAttributeContext.Provider
         value={{ selected: selected, setSelected: setSelected }}
       >
@@ -107,12 +84,39 @@ export const AvatarCreationPage = ({ prop }) => {
             />
           }
         />
+        <div style={{ display: "flex", gap: "2vw" }}>
+          <button
+            className="avatarButton"
+            onClick={() => {
+              let new_props = { ...avatarStyleProps };
+              for (let index = 0; index < styles.length; index++) {
+                let key = selected_to_style[index];
+                console.log(key);
+                let styleIndex =
+                  Math.floor(Math.random() * styles[index].length) + 1;
+                console.log(styleIndex);
+                new_props[key] = styleIndex;
+              }
+              setAvatarStyleProps(new_props);
+            }}
+          >
+            Randomize
+          </button>
+          <button
+            className="avatarButton"
+            onClick={() => {
+              console.log(avatarColorProps);
+              console.log(avatarStyleProps);
+            }}
+          >
+            Submit
+          </button>
+        </div>
       </SelectedAttributeContext.Provider>
-      <div style={{ height: "2vh" }} />
       <div
         className="bottom"
         style={{
-          height: "38vh",
+          height: "40vh",
           width: "100vw",
           backgroundColor: "#f8f8f8",
           display: "flex",

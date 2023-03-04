@@ -15,8 +15,7 @@ export const HairBack = ({ hairColor, type }) => {
     3: <HairBackStyle1 hairColor={hairColor} />,
     4: <HairBackStyle1 hairColor={hairColor} />,
     5: <HairBackStyle1 hairColor={hairColor} />,
-    6: <HairBackStyle2 hairColor={hairColor} />,
-    7: <HairBackStyle3 hairColor={hairColor} />,
+    6: <HairBackStyle3 hairColor={hairColor} />,
   };
 
   return types[type];

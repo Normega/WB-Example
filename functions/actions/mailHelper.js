@@ -12,20 +12,21 @@ const cors = require("cors")({
 // admin.initializeApp();
 // const db = admin.firestore();
 
+// set up the emailing-sending server
 function prepareMail (req, res) {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
         secure: true, // use SSL
         auth: {
-            user: "firebase@radlab.zone",
-            pass: "MFtriangle",
-        }
+            user: "radlab.noreply@gmail.com",
+            pass: "zdxvgdwcxtqodfyg",
+        },
     });
     cors(req, res, () => {
         const mailOptions = {
             from: "firebase@radlab.zone",
-            to: req.body.dest,
+            to: req.query.dest,
             subject: "Wellness Buddy Check-in",
             html: `<h1 style="font-size: 32px;"> Testing Testing </h1>
                 <br />
@@ -36,26 +37,27 @@ function prepareMail (req, res) {
             if (erro) {
                 return res.send(erro.toString());
             }
-            return res.send("Sended, requested email: " + req.body.dest);
+            return res.send("Sended, requested email: " + req.query.dest);
         });
     });
 }
 
+// sends mail to the specified email
 async function requestMail (email) {
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         //    add more data below...
-        body: JSON.stringify({ dest: email }),
+        query: JSON.stringify({ dest: email }),
         // params: JSON.stringify({ dest: "radlab.noreply@gmail.com" }),
     };
-    //    change the POST link below
-    await fetch("http://localhost:5001/wellbeing-49fed/us-central1/sendMail", requestOptions)
+    //    Production: change the POST link below
+    await fetch("http://127.0.0.1:5001/wellbeing-49fed/us-central1/sendMail", requestOptions)
         .then(res => {
             console.log(res.text());
             // console.log(res.text())
-            // return "this works!";
-            return res.text();
+            return "this works!";
+            // return res.text();
         })
         .then(data => {
             console.log(data);
@@ -65,6 +67,7 @@ async function requestMail (email) {
 }
 exports.requestMail = requestMail;
 
+// build the https function for sending the emails
 exports.sendMail = functions.https.onRequest((req, res) => {
     prepareMail(req, res);
 });
@@ -83,14 +86,20 @@ function collectEmails () {
     return data;
 }
 // testing
-exports.collectEmails = collectEmails;
+exports.collectEmails = functions.https.onRequest((req, res) => {
+    res.send(collectEmails());
+});
 
 exports.weeklySendMail = functions.pubsub
     .schedule("every day 06:00")
     .timeZone("America/Toronto")
     .onRun(context => {
-        // return requestMail("radlab.noreply@gmail.com");
+        // return requestMail("dunkim865@gmail.com");
+        // return collectEmails();
+        console.log(collectEmails()[0]);
         collectEmails().forEach(doc => {
+            console.log(doc);
             requestMail(doc.email);
         });
+        return "daily check-in emails successfully sent";
     });

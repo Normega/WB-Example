@@ -79,11 +79,12 @@ const CheckIn = () => {
     const timeStamp = Math.floor(Date.now() / 3.6e6).toString();
     const docRef = doc(db, "responses", timeStamp);
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists) {
-      var new_arr = doc.data().arr;
+    console.log(docSnap);
+    if (docSnap.exists()) {
+      var new_arr = docSnap.data().arr;
       new_arr.push(results.stress);
       var new_avg =
-        (doc.data().avg * (new_arr.length - 1) + results.stress) /
+        (docSnap.data().avg * (new_arr.length - 1) + results.stress) /
         new_arr.length;
       var variation_param = 0;
       for (let i = 0; i < new_arr.length; i++) {

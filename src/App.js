@@ -39,10 +39,7 @@ class App extends React.Component {
       <Provider store={store}>
         <ToastProvider>
           <Router>
-            <Routes>
-              <Route path="/" element={<ServiceApp />}></Route>
-              <Route path="/avatar" element={<AvatarCreationPage />}></Route>
-            </Routes>
+            <ServiceApp />
           </Router>
         </ToastProvider>
       </Provider>

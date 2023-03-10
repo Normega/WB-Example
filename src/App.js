@@ -2,11 +2,13 @@ import React from "react";
 
 import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
+import Routess from "Routes.js";
 import initStore from "./store";
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import ServiceApp from "ServiceApp";
+import { AvatarCreationPage } from "pages/AvatarCreation";
 
 import { onAuthStateChange, storeAuthUser } from "actions";
 

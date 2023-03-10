@@ -1,3 +1,10 @@
+.loading {
+    display: flex;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+}
+
 .profile-main-container {
     display: flex;
     flex-direction: column;
@@ -49,7 +56,7 @@
 .info-stats-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 180px;
+    column-gap: 7rem;
     row-gap: 3rem;
 }
 
@@ -73,7 +80,7 @@
 .daily-reflection-container {
     flex: 1;
     border: 2px solid black;
-    height: 180px;
+    margin-top: 1rem;
 }
 
 .top {
@@ -91,5 +98,34 @@
 
 .reflection h1 {
     font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.date-container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 8rem;
+    justify-content: center;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #b0d1b9;
+    border-radius: 1rem;
+    padding: 0.8rem;
+    cursor: pointer;
+}
+
+.date.highlight {
+    background-color: #f8d7ab;
+    color: black;
+    margin: 0;
+}
+
+.date h1 {
+    font-size: 1.1rem;
     font-weight: 600;
 }

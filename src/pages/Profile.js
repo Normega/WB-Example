@@ -40,9 +40,12 @@ export default function Profile() {
             const surveys = {};
 
             const querySnapshot = await getDocs(collection(db, "profiles", user.uid, "checkIns"));
-            querySnapshot.forEach(doc => {
-                surveys[doc.id] = doc.data();
-            });
+            querySnapshot.docs
+                .reverse() // order the documents by date in descending order
+                .slice(0, 7) // get the 7 most recent survey
+                .forEach(doc => {
+                    surveys[doc.id] = doc.data();
+                });
 
             setUserData(surveys);
             setSelectedDate(querySnapshot.docs[querySnapshot.docs.length - 1].id);

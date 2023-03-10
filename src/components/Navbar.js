@@ -84,11 +84,11 @@ const Navbar = props => {
                     </div> */}
 
                     <div className='navbar-end'>
-                        {user && (
+                        {/* {user && (
                             <div className='navbar-item is-secondary user-welcome'>
                                 {`Hi ${user.fullName}!`}
                             </div>
-                        )}
+                        )} */}
                         <Link to='/' className='navbar-item is-secondary'>
                             Home
                         </Link>
@@ -98,7 +98,7 @@ const Navbar = props => {
                         <Link to='/dashboard' className='navbar-item is-secondary'>
                             Dashboard
                         </Link>
-                        {isAuth && (
+                        {/* {isAuth && (
                             <React.Fragment>
                                 <div className='navbar-item has-dropdown is-hoverable'>
                                     <a className='navbar-link'>Manage</a>
@@ -112,7 +112,7 @@ const Navbar = props => {
                                     </div>
                                 </div>
                             </React.Fragment>
-                        )}
+                        )} */}
                         {!isAuth && (
                             <React.Fragment>
                                 <Link

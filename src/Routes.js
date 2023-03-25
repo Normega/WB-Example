@@ -1,7 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
-import HomePage from "./pages/Home"; //the imported name (e.g., HomePage) could be whatever you want
 import ProfilePage from "./pages/Profile";
 import ServicesPage from "./pages/Services";
 import ServiceDetailPage from "./pages/ServiceDetail";
@@ -14,10 +12,11 @@ import ServiceCreatePage from "pages/services/ServiceCreate";
 import UserServicesPage from "pages/services/UserServices";
 import CheckIn from "pages/CheckIn";
 import UserDashboard from "pages/UserDashboard";
+import Hero from "components/Hero";
 
 const Routess = () => (
   <Routes>
-    <Route path="/" element={<HomePage />} />
+    <Route path="/" element={<Hero />} />
     {/* service id is dynamic */}
     <Route path="/services/me" element={<UserServicesPage />} />
     <Route path="/services/new" element={<ServiceCreatePage />} />
@@ -27,10 +26,10 @@ const Routess = () => (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/register" element={<RegisterPage />} />
     <Route path="/secret" element={<SecretPage />} />
-    <Route path="/avatar-creation" element={<AvatarCreationPage />} />
     <Route path="/definition" element={<WellnessDefinition />} />
     <Route path="/checkin" element={<CheckIn />} />
     <Route path="/dashboard" element={<UserDashboard />} />
+    <Route path="/avatar" element={<AvatarCreationPage />}></Route>
   </Routes>
 );
 

@@ -1,27 +1,123 @@
-import React, { useState, useEffect, useRef } from "react";
-import {requestMail} from "actions"
-import { set } from "react-hook-form";
-import { getFunctions, httpsCallable } from "firebase/functions";
-import db, {app} from 'db'
+import React, { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { useStore } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
+import getDateAndMonth from "helpers/getDateAndMonth";
+import db from "../db/index";
+import "../styles/Profile.css";
+
+const InfoStats = ({ imgUrl, stat, category }) => {
+    return (
+        <div className='info-stats'>
+            <img src={imgUrl} alt='' />
+            <div className='stats'>
+                <h1>{stat}</h1>
+                <p>{category}</p>
+            </div>
+        </div>
+    );
+};
+
+const Date = ({ date, day, dateString, selectedDate, handleClick }) => {
+    return (
+        <div
+            className={`date ${dateString === selectedDate ? "highlight" : ""}`}
+            onClick={handleClick}>
+            <h1>{date}</h1>
+            <h1>{day}</h1>
+        </div>
+    );
+};
 
 export default function Profile() {
+    const user = useStore().getState().auth.user;
+    const [loading, setLoading] = useState(true);
+    const [selectedDate, setSelectedDate] = useState("");
+    const [userData, setUserData] = useState({});
 
-  // const functions = getFunctions(app);
-  // const test = httpsCallable(functions, 'test');
-  // test({ message: "messageText" })
-  //   .then((result) => {
-  //     console.log("test function ran successful")
+    useEffect(() => {
+        const fetchData = async () => {
+            const surveys = {};
 
-  //   });
-  // Below for testing purpose
-  const sendMail = () => {
-    requestMail("radlab.noreploy@gmail.com");
-  }
+            const querySnapshot = await getDocs(collection(db, "profiles", user.uid, "checkIns"));
+            querySnapshot.docs
+                .reverse() // order the documents by date in descending order
+                .slice(0, 7) // get the 7 most recent survey
+                .forEach(doc => {
+                    surveys[doc.id] = doc.data();
+                });
 
-  return (
-    <div>
-      <h1>I am Profile Page </h1>
-      <button onClick={sendMail}> Click button to send email </button>
-    </div>
-  );
+            setUserData(surveys);
+            setSelectedDate(querySnapshot.docs[querySnapshot.docs.length - 1].id);
+            setLoading(false);
+        };
+
+        fetchData();
+    }, [user.uid]);
+
+    const dateElements = Object.keys(userData).map(dateString => {
+        const [formattedDate, dayOfWeek] = getDateAndMonth(dateString);
+
+        return (
+            <Date
+                date={formattedDate}
+                day={dayOfWeek}
+                dateString={dateString}
+                selectedDate={selectedDate}
+                handleClick={() => setSelectedDate(dateString)}
+            />
+        );
+    });
+
+    if (loading) {
+        return (
+            <div className='loading'>
+                <ClipLoader loading={loading} size={100} aria-label='Loading Spinner' />
+            </div>
+        );
+    }
+
+    return (
+        <section className='profile-main-container'>
+            <div className='avatar-container'>
+                <img src='images/avatar_placeholder.png' alt='avatar' />
+                <h1 className='username-header'>{user.fullName}</h1>
+            </div>
+            <div className='profile-info-container'>
+                <div className='daily-info-container'>
+                    <h1 className='daily-header'>Daily Information</h1>
+                    <div className='info-stats-container'>
+                        <InfoStats
+                            imgUrl={"/images/profile-mood.png"}
+                            stat={userData[selectedDate].mood}
+                            category={"Mood"}
+                        />
+                        <InfoStats
+                            imgUrl={"/images/profile-awareness.png"}
+                            stat={userData[selectedDate].thoughts.AW1}
+                            category={"Awareness"}
+                        />
+                        <InfoStats
+                            imgUrl={"/images/profile-stress.png"}
+                            stat={userData[selectedDate].stress}
+                            category={"Stress"}
+                        />
+                        <InfoStats
+                            imgUrl={"/images/profile-reappraisal.png"}
+                            stat={userData[selectedDate].thoughts.RA1}
+                            category={"Reappraisal"}
+                        />
+                    </div>
+                </div>
+                <div className='daily-reflection-container'>
+                    <div className='top'></div>
+                    <div className='reflection'>
+                        <h1>DAILY REFLECTION</h1>
+                        <p>{userData[selectedDate].reflection}</p>
+                    </div>
+                </div>
+            </div>
+            <div className='date-container'>{dateElements}</div>
+        </section>
+    );
 }

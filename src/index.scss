@@ -563,6 +563,7 @@ footer.footer-dark {
     color: $white;
     .columns {
         margin-top: 35px;
+        margin: 0;
     }
     .footer-logo {
         img {
@@ -668,6 +669,7 @@ Hero styles
         font-family: 'Open Sans', sans-serif;
     }
     .title {
+        text-align: left;
         &.is-bold {
             font-weight: 700;
         }
@@ -695,6 +697,7 @@ Navbar
     position: relative;
     min-height: 3.8rem;
     transition: all .3s;
+    padding: 2rem 8rem;
     z-index: 29;
     .container {
         min-height: 4rem;
@@ -723,10 +726,12 @@ Navbar
     }
     .navbar-end {
         align-items: center;
+        gap: 0.7rem;
     }
     //Navbar items
     .navbar-item {
-        color: $muted-grey;
+        color: black;
+        font-size: 1.1rem;
         &.is-secondary {
             &:hover {
                 color: $secondary !important;

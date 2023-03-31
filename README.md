@@ -68,3 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Backend firebase code is in \functions file
+Helper methods related to sending emails to user is stored in `mailHelper.js`.
+Helper methods related to check-in data, ... are stored in `checkInHelper.js`.

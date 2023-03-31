@@ -12,7 +12,11 @@ const cors = require("cors")({
 // admin.initializeApp();
 // const db = admin.firestore();
 
-// set up the emailing-sending server
+/**
+ * set up the email sending server; request of string that is valid email, the pre-setup email will be sent to the requested email
+ * @param {*} req
+ * @param {*} res
+ */
 function prepareMail (req, res) {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -42,7 +46,10 @@ function prepareMail (req, res) {
     });
 }
 
-// sends mail to the specified email
+/**
+ * Send email
+ * @param {*} email
+ */
 async function requestMail (email) {
     const requestOptions = {
         method: "POST",
@@ -71,7 +78,11 @@ exports.requestMail = requestMail;
 exports.sendMail = functions.https.onRequest((req, res) => {
     prepareMail(req, res);
 });
-// Iterates thrur database and collects emails
+
+/**
+ * Returns the array that contains the email address of all users.
+ * @returns Array
+ */
 function collectEmails () {
     const data = [];
     admin
@@ -85,11 +96,17 @@ function collectEmails () {
     });
     return data;
 }
-// testing
+/**
+ * Runs `collectEmails` function in the server
+ *
+ */
 exports.collectEmails = functions.https.onRequest((req, res) => {
     res.send(collectEmails());
 });
 
+/**
+ * Send email to the user every day at 6am.
+ */
 exports.weeklySendMail = functions.pubsub
     .schedule("every day 06:00")
     .timeZone("America/Toronto")

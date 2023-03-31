@@ -8,7 +8,7 @@ const onlyGuest = Component => {
 
     render() {
       const { auth, dispatch, ...rest } = this.props
-      return auth.isAuth ? <Navigate to="/" /> : <Component {...rest} />
+      return auth.isAuth ? <Navigate to="/avatar" /> : <Component {...rest} />
     }
   }
 

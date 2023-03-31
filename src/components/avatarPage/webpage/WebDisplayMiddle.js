@@ -77,7 +77,6 @@ export const WebDisplayMiddle = ({ avatar }) => {
                 icon={elem.icon}
                 updateSelected={() => {
                   setSelected(index);
-                  console.log(index);
                 }}
                 isSelected={true}
               />
@@ -90,7 +89,6 @@ export const WebDisplayMiddle = ({ avatar }) => {
                 icon={elem.icon}
                 updateSelected={() => {
                   setSelected(index);
-                  console.log(index);
                 }}
                 isSelected={false}
               />
@@ -132,7 +130,6 @@ export const WebDisplayMiddle = ({ avatar }) => {
                 icon={elem.icon}
                 updateSelected={() => {
                   setSelected(new_index);
-                  console.log(index);
                 }}
                 isSelected={true}
               />
@@ -145,7 +142,6 @@ export const WebDisplayMiddle = ({ avatar }) => {
                 icon={elem.icon}
                 updateSelected={() => {
                   setSelected(new_index);
-                  console.log(index);
                 }}
                 isSelected={false}
               />

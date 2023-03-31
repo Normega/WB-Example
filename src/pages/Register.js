@@ -27,9 +27,6 @@ const Register = () => {
         })
     );
   };
-  if (redirect /*&& user has not set an avatar */) {
-    return <Navigate to="/avatar-creation" />;
-  }
 
   return (
     <div className="auth-page">

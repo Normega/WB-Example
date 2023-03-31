@@ -3,6 +3,9 @@ const db = admin.firestore();
 const functions = require("firebase-functions");
 const mailHelper = require("./mailHelper");
 
+/**
+ * Send check in email to users every morning
+ */
 exports.sendCheckIn = functions.pubsub
     .schedule("every day 06:00")
     .timeZone("America/Toronto")
@@ -15,6 +18,10 @@ exports.sendCheckIn = functions.pubsub
         return null;
     });
 
+/**
+ * Resets the variable stored in each user 'checkin' which indicates whether the user checked
+ * in (true) or not (false). Reset this variable to false.
+ */
 exports.resetCheckin = functions.pubsub
     .schedule("every day 06:00")
     .timeZone("America/Toronto")
@@ -31,6 +38,9 @@ exports.resetCheckin = functions.pubsub
         return null;
     });
 
+/**
+ *
+ */
 exports.resetQuarterlyCheckin = functions.pubsub
     .schedule("0 6 1 1,4,7,10 *")
     .timeZone("America/Toronto")

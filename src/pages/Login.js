@@ -46,7 +46,11 @@ const Login = () => {
   if (redirect) {
     if (user.checkin) {
       return <Navigate to="/" />;
-    } else {
+    } 
+    else if (!user.created_avatar) {
+      return <Navigate to="/avatar" />;
+    }
+    else {
       return <Navigate to="/checkin" />;
     }
   }

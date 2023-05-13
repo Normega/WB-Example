@@ -34,15 +34,14 @@ const SignUp = () => {
         // TODO: Email Link Verification + Authentication with Google
 
         try {
-            const res = await register({
+            await register({
                 email: formData.email,
                 password: formData.password,
                 fullName: formData.fullName,
             });
-
             setErrorMessage("");
-
-            // TODO: REdirect user to avatar creation
+            
+            navigate('/avatar');
         } catch (error) {
             setErrorMessage(error);
             console.log(error);

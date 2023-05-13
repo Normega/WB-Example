@@ -1,5 +1,3 @@
-/* eslint jsx-a11y/anchor-is-valid: 0 */
-
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -97,19 +95,20 @@ const Navbar = props => {
                                 {`Hi ${user.fullName}!`}
                             </div>
                         )} */}
-              <Link to="/" className="navbar-item is-secondary">
-                Home
-              </Link>
-              <Link to="/profile" className="navbar-item is-secondary">
-                Profile
-              </Link>
-              <Link to="/dashboard" className="navbar-item is-secondary">
-                Dashboard
-              </Link>
-              <Link to="/avatar" className="navbar-item is-secondary">
-                Avatar
-              </Link>
-              {/* {isAuth && (
+                        <Link to='/' className='navbar-item is-secondary'>
+                            Home
+                        </Link>
+                        {isAuth && (
+                            <React.Fragment>
+                                <Link to='/profile' className='navbar-item is-secondary'>
+                                    Profile
+                                </Link>
+                                <Link to='/dashboard' className='navbar-item is-secondary'>
+                                    Dashboard
+                                </Link>
+                            </React.Fragment>
+                        )}
+                        {/* {isAuth && (
                             <React.Fragment>
                                 <div className='navbar-item has-dropdown is-hoverable'>
                                     <a className='navbar-link'>Manage</a>
@@ -124,33 +123,32 @@ const Navbar = props => {
                                 </div>
                             </React.Fragment>
                         )} */}
-              {!isAuth && (
-                <React.Fragment>
-                  <Link
-                    to="/login"
-                    className="navbar-item is-secondary modal-trigger"
-                    data-modal="auth-modal"
-                  >
-                    Log in
-                  </Link>
-                  {/* <Link to='/register' className='navbar-item'>
+                        {!isAuth && (
+                            <React.Fragment>
+                                <Link
+                                    to='/login'
+                                    className='navbar-item is-secondary modal-trigger'
+                                    data-modal='auth-modal'>
+                                    Log in
+                                </Link>
+                                <Link to='/register' className='navbar-item'>
                                     <span className='button signup-button rounded secondary-btn raised'>
                                         Sign up
                                     </span>
-                                </Link> */}
-                </React.Fragment>
-              )}
-              {isAuth && (
-                <div onClick={logout} className="navbar-item">
-                  <span className="button signup-button is-danger rounded raised">
-                    Logout
-                  </span>
+                                </Link>
+                            </React.Fragment>
+                        )}
+                        {isAuth && (
+                            <div onClick={logout} className='navbar-item'>
+                                <span className='button signup-button is-danger rounded raised'>
+                                    Logout
+                                </span>
+                            </div>
+                        )}
+                    </div>
                 </div>
-              )}
             </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     );
 };
 

@@ -1,111 +1,101 @@
-/* eslint jsx-a11y/anchor-is-valid: 0 */
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { login } from "actions";
-import { useToasts } from "react-toast-notifications";
-import { Navigate } from "react-router-dom";
-import onlyGuest from "components/hoc/onlyGuest";
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
-
-// Initialize Cloud Firestore and get a reference to the service
-const db = firebase.firestore();
+import '../styles/LogIn.css';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login, loginWithGoogle } from 'actions';
+import { doc, getDoc } from 'firebase/firestore';
+import onlyGuest from 'components/hoc/onlyGuest';
+import { FcGoogle } from 'react-icons/fc';
+import db from '../db/index';
 
 const Login = () => {
-  const [redirect, setRedirect] = useState(false);
-  const [user, setUser] = useState(null);
-  const { register, handleSubmit } = useForm();
-  const { addToast } = useToasts();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
-  const onLogin = (loginData) => {
-    login(loginData).then(
-      (_) => {
-        db.collection("profiles")
-          .where("email", "==", loginData.email)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              setUser(doc.data());
-            });
-          })
-          .catch((error) => {
-            console.log("Error getting documents: ", error);
-          })
-          .then(() => {
-            setRedirect(true);
-          });
-      },
-      (errorMessage) =>
-        addToast(errorMessage, {
-          appearance: "error",
-          autoDismiss: true,
-          autoDismissTimeout: 3000,
-        })
-    );
+  const handleChange = e => {
+    setFormData(prevFormData => {
+      return {
+        ...prevFormData,
+        [e.target.name]: e.target.value,
+      };
+    });
   };
-  if (redirect) {
-    if (user.checkin) {
-      return <Navigate to="/" />;
-    } 
-    else if (!user.created_avatar) {
-      return <Navigate to="/avatar" />;
-    }
-    else {
-      return <Navigate to="/checkin" />;
+
+  const handleRedirect = async (uid) => {
+    const docRef = doc(db, 'profiles', uid);
+    const docSnap = await getDoc(docRef);
+
+    const checkInStatus = docSnap.data().checkin;
+    const avatarStatus = docSnap.data().created_avatar;
+
+    if (!checkInStatus) {
+      navigate('/checkin');
+    } else if (!avatarStatus) {
+      navigate('/avatar');
+    } else {
+      navigate('/');
     }
   }
 
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    try {
+      const uid = await login(formData);
+      await handleRedirect(uid);
+    } catch (e) {
+      setErrorMessage(e);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    const uid = await loginWithGoogle();
+    await handleRedirect(uid);
+  }
+
   return (
-    <div className="auth-page">
-      <div className="container has-text-centered">
-        <div className="column is-4 is-offset-4">
-          <h3 className="title has-text-grey">Login</h3>
-          <p className="subtitle has-text-grey">Please login to proceed.</p>
-          <div className="box">
-            <figure className="avatar">
-              <img src={require("./user_avatar.png")} alt="user_avatar" />
-            </figure>
-            <form onSubmit={handleSubmit(onLogin)}>
-              <div className="field">
-                <div className="control">
-                  <input
-                    {...register("email")}
-                    name="email"
-                    className="input is-large"
-                    type="email"
-                    placeholder="Your Email"
-                    autoComplete="email"
-                  />
-                </div>
-              </div>
-              <div className="field">
-                <div className="control">
-                  <input
-                    {...register("password")}
-                    name="password"
-                    className="input is-large"
-                    type="password"
-                    placeholder="Your Password"
-                    autoComplete="current-password"
-                  />
-                </div>
-              </div>
-              <button
-                type="submit"
-                className="button is-block is-info is-large is-fullwidth"
-              >
-                Sign In
-              </button>
-            </form>
-          </div>
-          <p className="has-text-grey">
-            <a>Sign In With Google</a>&nbsp;·&nbsp;
-            <a href="/">Sign Up</a> &nbsp;<br></br>
-            <a href="../">Need Help?</a>
-          </p>
+    <section className='login-main'>
+      <div className='login-top'>
+        <h1>Log In</h1>
+        <p>Please log in to proceed with our service!</p>
+        <div className='login-google' onClick={handleGoogleLogin}>
+          <FcGoogle />
+          <span>Sign In with Google</span>
         </div>
       </div>
-    </div>
+      <div className='or-line'>
+        <p>or</p>
+      </div>
+      <div className='login-bottom'>
+        <form onSubmit={handleSubmit}>
+          <input
+            type='email'
+            placeholder='Email'
+            name='email'
+            onChange={handleChange}
+            required
+          />
+          <input
+            type='password'
+            placeholder='Password'
+            name='password'
+            onChange={handleChange}
+            required
+          />
+          {errorMessage && <p className='error'>{errorMessage}</p>}
+          <button>Confirm</button>
+        </form>
+        <div className='redirect'>
+          <p>Don't have an account?</p>
+          <a href='' onClick={() => navigate('/register')}>
+            Sign Up
+          </a>
+        </div>
+      </div>
+    </section>
   );
 };
 

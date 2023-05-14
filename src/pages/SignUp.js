@@ -40,8 +40,8 @@ const SignUp = () => {
                 fullName: formData.fullName,
             });
             setErrorMessage("");
-            
-            navigate('/avatar');
+
+            navigate("/avatar");
         } catch (error) {
             setErrorMessage(error);
             console.log(error);
@@ -52,14 +52,14 @@ const SignUp = () => {
         try {
             const res = await registerWithGoogle();
             if (res.isNewUser) {
-                navigate('/avatar');
+                navigate("/avatar");
             } else {
-                navigate('/');
+                navigate("/");
             }
         } catch (e) {
             console.log(e);
         }
-    }
+    };
 
     return (
         <section className='signup-main'>

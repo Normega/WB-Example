@@ -5,6 +5,7 @@ import * as api from "api";
 export const register = registerFormData => api.register({ ...registerFormData });
 export const registerWithGoogle = () => api.registerWithGoogle();
 export const login = loginData => api.login({ ...loginData });
+export const loginWithGoogle = () => api.loginWithGoogle();
 export const onAuthStateChange = onAuthCallback => api.onAuthStateChange(onAuthCallback);
 
 export const logout = () => dispatch =>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
+import annotationPlugin from "chartjs-plugin-annotation";
 import { useNavigate } from "react-router-dom";
 import { doc, collection, getDoc, getDocs } from "firebase/firestore";
 import { useStore } from "react-redux";
 import db from "../db/index";
 import formatDateString from "../helpers/formatDateString";
-import { moodStressOption, questionOption } from "data/chartOptions";
+import { getMoodStressLineData, getQuestionLineData, standardNormalData } from "data/chartData";
+import { moodStressOption, questionOption, getMoodStressBarOption } from "data/chartOptions";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -16,9 +18,11 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
+import { calculateMean, calculateSD } from "../helpers/calculateDistribution";
 import "../styles/UserDashboard.css";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement,
+    LineElement, Title, Tooltip, Legend, annotationPlugin);
 
 const UserDashboard = () => {
     const uid = useStore().getState().auth.user?.uid;
@@ -29,6 +33,7 @@ const UserDashboard = () => {
         reactivity: {},
         reappraisal: {},
     });
+    const [zScores, setZScores] = useState({});
     const [checkedIn, setCheckedIn] = useState(false);
     const navigate = useNavigate();
 
@@ -59,56 +64,48 @@ const UserDashboard = () => {
             });
         };
 
+        const fetchZScores = async () => {
+            // retrieve all mood and stress data across all users
+            const allMoodData = [];
+            const allStressData = [];
+            const profiles = await getDocs(collection(db, "profiles"));
+
+            for (const profile of profiles.docs) {
+                const checkIns = await getDocs(collection(db, "profiles", profile.id, "checkIns"));
+                checkIns.forEach(doc => {
+                    allMoodData.push(doc.data().mood);
+                    allStressData.push(doc.data().stress);
+                })
+            }
+
+            // calculate mean and standard deviation
+            const moodMean = calculateMean(allMoodData);
+            const moodSD = calculateSD(allMoodData, moodMean);
+            const stressMean = calculateMean(allStressData);
+            const stressSD = calculateSD(allStressData, stressMean);
+
+            // calculate z-score for each user's mood and stress data
+            const zScores = {};
+
+            const userCheckIns = await getDocs(collection(db, "profiles", uid, "checkIns"));
+            const latestMood = userCheckIns.docs[userCheckIns.docs.length - 1].data().mood;
+            const latestStress = userCheckIns.docs[userCheckIns.docs.length - 1].data().stress;
+
+            zScores.mood = (latestMood - moodMean) / moodSD;
+            zScores.stress = (latestStress - stressMean) / stressSD;
+
+            setZScores(zScores);
+        }
+
         const fetchCheckedIn = async () => {
             const docSnap = await getDoc(doc(db, "profiles", uid));
             setCheckedIn(docSnap.data().checkin);
         };
 
         fetchData();
+        fetchZScores();
         fetchCheckedIn();
     }, [uid]);
-
-    const moodStressLineData = {
-        labels: Object.keys(moodData),
-        datasets: [
-            {
-                label: "Daily Mood",
-                data: Object.values(moodData),
-                borderColor: "rgb(53, 162, 235)",
-                backgroundColor: "rgba(53, 162, 235, 0.5)",
-            },
-            {
-                label: "Daily Stress",
-                data: Object.values(stressData),
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
-            },
-        ],
-    };
-
-    const questionLineData = {
-        labels: Object.keys(moodData),
-        datasets: [
-            {
-                label: "Awareness",
-                data: Object.values(questionData.awareness),
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
-            },
-            {
-                label: "Reactivity",
-                data: Object.values(questionData.reactivity),
-                borderColor: "rgb(75, 192, 192)",
-                backgroundColor: "rgba(75, 192, 192, 0.5)",
-            },
-            {
-                label: "Reappraisal",
-                data: Object.values(questionData.reappraisal),
-                borderColor: "rgb(53, 162, 235)",
-                backgroundColor: "rgba(53, 162, 235, 0.5)",
-            },
-        ],
-    };
 
     return (
         <div className='dashboard-main'>
@@ -119,10 +116,16 @@ const UserDashboard = () => {
                 </button>
             </div>
             <div>
-                <Line options={moodStressOption} data={moodStressLineData} />
+                <Line options={moodStressOption} data={getMoodStressLineData(moodData, stressData)} />
             </div>
             <div>
-                <Line options={questionOption} data={questionLineData} />
+                <Line options={questionOption} data={getQuestionLineData(moodData, questionData)} />
+            </div>
+            <div>
+                {zScores.mood != null && <Line options={getMoodStressBarOption(zScores.mood, 'Your Mood Z-Score Distribution')} data={standardNormalData} />}
+            </div>
+            <div>
+                {zScores.stress != null && <Line options={getMoodStressBarOption(zScores.stress, 'Your Stress Z-Score Distribution')} data={standardNormalData} />}
             </div>
         </div>
     );

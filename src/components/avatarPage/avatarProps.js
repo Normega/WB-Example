@@ -33,27 +33,50 @@ export const selected_to_style = {
   7: "earType",
 };
 
+
+// number of choices displayed
 export const styles = [
-  [{ color: "#654a80" }, { color: "#ed985f" }],
-  [{ color: "#654a80" }, { color: "#ed985f" }],
-  [{ color: "#654a80" }, { color: "#ed985f" }],
-  [{ color: "#654a80" }, { color: "#ed985f" }],
-  [{ color: "#654a80" }, { color: "#ed985f" }],
-  [
-    { color: "#654a80" },
+  [{ color: "#654a80" }, { color: "#ed985f" }], //face
+  [{ color: "#654a80" }, { color: "#ed985f" }], //nose
+  [{ color: "#654a80" }, { color: "#ed985f" }], //eyebrows
+  [//clothes
+    { color: "#654a80" }, 
+    { color: "#ed985f" },  
+    { color: "#654a80" }, 
     { color: "#ed985f" },
+    { color: "#654a80" }, 
     { color: "#ed985f" },
+    { color: "#654a80" }, 
+
+  ], 
+  [//eyes
+    { color: "#654a80" }, 
+    { color: "#ed985f" }, 
+    { color: "#ed985f" }, 
     { color: "#ed985f" },
+
   ],
-  [
+
+  [//mouth
+    { color: "#654a80" },
+    { color: "#ed985f" },
+    { color: "#ed985f" },
+    { color: "#ed985f" }, 
+    { color: "#ed985f" }, 
+
+  ], 
+  [//hair
     { color: "#654a80" },
     { color: "#ed985f" },
     { color: "#654a80" },
     { color: "#ed985f" },
     { color: "#654a80" },
     { color: "#ed985f" },
-  ],
-  [{ color: "#654a80" }, { color: "#ed985f" }],
+    { color: "#654a80" },
+    { color: "#ed985f" },
+
+  ], 
+  [{ color: "#654a80" }, { color: "#ed985f" }], //ear
 ]; //list[list[objects]] outerlist is attribute, innerlist is different styles, object is what style includes
 
 export const selected_to_color = {

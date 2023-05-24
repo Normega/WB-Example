@@ -55,7 +55,6 @@ export default function Profile() {
   return (
     <section className="profile-main-container">
       <div className="avatar-container">
-        {/* <img src="images/avatar_placeholder.png" alt="avatar" /> */}
         <Avatar
           {...avatarQuery.data.avatarColors}
           {...avatarQuery.data.avatarStyles}

@@ -25,3 +25,5 @@ yarn-error.log*
 #firebase key
 firebase-debug.log
 hosting.YnVpbGQ.cache
+
+/.vscode

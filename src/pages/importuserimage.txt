@@ -1,1 +1,0 @@
-<img src={require('./user_avatar.png')} alt="user_avatar"/>

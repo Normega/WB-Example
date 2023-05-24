@@ -1,105 +1,64 @@
 import React, { useState, useEffect } from "react";
-import { collection, getDocs, getDoc, doc } from "firebase/firestore";
+import { useQuery } from "@tanstack/react-query"
+import { getCheckInData, getAvatarMetaData } from "../api/user";
 import { Avatar } from "../components/avatarPage/avatar/avatar";
 import { useAuthStore } from "../store/store";
+import InfoStats from "../components/profile/InfoStats";
+import Date from "../components/profile/Date";
 import ClipLoader from "react-spinners/ClipLoader";
 import getDateAndMonth from "helpers/getDateAndMonth";
-import db from "../db/index";
 import "../styles/Profile.css";
-
-const InfoStats = ({ imgUrl, stat, category }) => {
-  return (
-    <div className="info-stats">
-      <img src={imgUrl} alt="" />
-      <div className="stats">
-        <h1>{stat}</h1>
-        <p>{category}</p>
-      </div>
-    </div>
-  );
-};
-
-const Date = ({ date, day, dateString, selectedDate, handleClick }) => {
-  return (
-    <div
-      className={`date ${dateString === selectedDate ? "highlight" : ""}`}
-      onClick={handleClick}
-    >
-      <h1>{date}</h1>
-      <h1>{day}</h1>
-    </div>
-  );
-};
 
 export default function Profile() {
   const user = useAuthStore((store) => store.user);
-  const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState("");
-  const [userData, setUserData] = useState({});
-  const [avatarColorProps, setAvatarColorProps] = useState(null);
-  const [avatarStyleProps, setAvatarStyleProps] = useState(null);
+
+  const checkInQuery = useQuery({
+    queryKey: ["checkIns", user.uid],
+    queryFn: () => getCheckInData(user.uid),
+  })
+
+  const avatarQuery = useQuery({
+    queryKey: ["avatar", user.uid],
+    queryFn: () => getAvatarMetaData(user.uid),
+  })
 
   useEffect(() => {
-    const fetchData = async () => {
-      const surveys = {};
-
-      const querySnapshot = await getDocs(
-        collection(db, "profiles", user.uid, "checkIns")
-      );
-      querySnapshot.docs
-        .reverse() // order the documents by date in descending order
-        .slice(0, 7) // get the 7 most recent survey
-        .forEach((doc) => {
-          surveys[doc.id] = doc.data();
-        });
-
-      setUserData(surveys);
-      setSelectedDate(querySnapshot.docs[querySnapshot.docs.length - 1].id);
-      setLoading(false);
-    };
-
-    const fetchAvatar = async () => {
-      const userDoc = await getDoc(doc(db, "profiles", user.uid));
-      const avatar = userDoc.data().avatar;
-
-      setAvatarColorProps(avatar.colors);
-      setAvatarStyleProps(avatar.styles);
+    if (checkInQuery.status === 'success') {
+      setSelectedDate(checkInQuery.data.selectedDate)
     }
+  }, [checkInQuery.status, checkInQuery.data]);
 
-    fetchData();
-    fetchAvatar();
-  }, [user.uid]);
+  if (checkInQuery.isLoading && avatarQuery.isLoading) {
+    return (
+      <div className="loading">
+        <ClipLoader loading={checkInQuery.isLoading} size={100} aria-label="Loading Spinner" />
+      </div>
+    );
+  }
 
-  const dateElements = Object.keys(userData).map((dateString) => {
+  const dateElements = Object.keys(checkInQuery.data.checkIns).map((dateString, idx) => {
     const [formattedDate, dayOfWeek] = getDateAndMonth(dateString);
 
     return (
       <Date
+        key={idx}
         date={formattedDate}
         day={dayOfWeek}
         dateString={dateString}
         selectedDate={selectedDate}
-        key={formattedDate}
         handleClick={() => setSelectedDate(dateString)}
       />
     );
   });
-
-  if (loading) {
-    return (
-      <div className="loading">
-        <ClipLoader loading={loading} size={100} aria-label="Loading Spinner" />
-      </div>
-    );
-  }
 
   return (
     <section className="profile-main-container">
       <div className="avatar-container">
         {/* <img src="images/avatar_placeholder.png" alt="avatar" /> */}
         <Avatar
-          {...avatarColorProps}
-          {...avatarStyleProps}
+          {...avatarQuery.data.avatarColors}
+          {...avatarQuery.data.avatarStyles}
           size="calc(25vh - 4px)"
         />
         <h1 className="username-header">{user.fullName ?? user.displayName}</h1>
@@ -110,22 +69,22 @@ export default function Profile() {
           <div className="info-stats-container">
             <InfoStats
               imgUrl={"/images/profile-mood.png"}
-              stat={userData[selectedDate].mood}
+              stat={checkInQuery.data.checkIns[selectedDate]?.mood}
               category={"Mood"}
             />
             <InfoStats
               imgUrl={"/images/profile-awareness.png"}
-              stat={userData[selectedDate].thoughts.AW1}
+              stat={checkInQuery.data.checkIns[selectedDate]?.thoughts.AW1}
               category={"Awareness"}
             />
             <InfoStats
               imgUrl={"/images/profile-stress.png"}
-              stat={userData[selectedDate].stress}
+              stat={checkInQuery.data.checkIns[selectedDate]?.stress}
               category={"Stress"}
             />
             <InfoStats
               imgUrl={"/images/profile-reappraisal.png"}
-              stat={userData[selectedDate].thoughts.RA1}
+              stat={checkInQuery.data.checkIns[selectedDate]?.thoughts.RA1}
               category={"Reappraisal"}
             />
           </div>
@@ -134,7 +93,7 @@ export default function Profile() {
           <div className="top"></div>
           <div className="reflection">
             <h1>DAILY REFLECTION</h1>
-            <p>{userData[selectedDate].reflection}</p>
+            <p>{checkInQuery.data.checkIns[selectedDate]?.reflection}</p>
           </div>
         </div>
       </div>

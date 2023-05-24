@@ -69,10 +69,11 @@ export const AvatarCreationPage = ({ prop }) => {
           created_avatar: true
         };
         updateDoc(doc(db, "profiles", user.uid), new_data);
-      }})
+      }
+    })
   }
 
-    
+
   return (
     <div
       className="main"

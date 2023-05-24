@@ -5,15 +5,14 @@ import "survey-core/defaultV2.min.css";
 import { StylesManager, Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import { getSurveyJSON } from "data/survey";
-import { useStore } from "react-redux";
+import { useAuthStore } from "../store/store";
 import db from "../db/index";
 import getDateString from "../helpers/getDateString";
 
 StylesManager.applyTheme("defaultV2");
 
 const CheckIn = () => {
-  const store = useStore();
-  const uid = store.getState().auth.user?.uid;
+  const uid = useAuthStore(store => store.user.uid);
   const [redirect, setRedirect] = useState(false);
   const [isQuarterlyCheckin, setIsQuarterlyCheckin] = useState(false);
   const [surveyJSON, setSurveyJSON] = useState({});

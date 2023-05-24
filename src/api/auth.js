@@ -2,7 +2,6 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
@@ -14,7 +13,7 @@ import db from 'db';
 const createUserProfile = userProfile =>
   db.collection('profiles').doc(userProfile.uid).set(userProfile);
 
-export const register = async ({ email, password, fullName }) => {
+const register = async ({ email, password, fullName }) => {
   const auth = getAuth();
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -58,7 +57,7 @@ export const register = async ({ email, password, fullName }) => {
   }
 };
 
-export const registerWithGoogle = async () => {
+const registerWithGoogle = async () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
 
@@ -117,19 +116,18 @@ export const registerWithGoogle = async () => {
   }
 };
 
-export const login = async ({ email, password }) => {
+const login = async ({ email, password }) => {
   const auth = getAuth();
 
   try {
     const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-    return userCredentials.user.uid;
+    return userCredentials.user;
   } catch {
     return Promise.reject('Incorrect email or password');
   }
-
 };
 
-export const loginWithGoogle = async () => {
+const loginWithGoogle = async () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
 
@@ -176,27 +174,15 @@ export const loginWithGoogle = async () => {
       await createUserProfile(userProfile);
     }
 
-    return user.uid;
+    return user;
   } catch (error) {
     Promise.reject(error.message);
   }
 };
 
-export const logout = () => {
+const logout = () => {
   const auth = getAuth();
   signOut(auth);
 };
 
-export const onAuthStateChange = onAuthCallback => {
-  const auth = getAuth();
-  onAuthStateChanged(auth, onAuthCallback);
-};
-
-export const getUserProfile = uid =>
-  db
-    .collection('profiles')
-    .doc(uid)
-    .get()
-    .then(snapshot => ({ uid, ...snapshot.data() }));
-
-// export const createUserRef = (uid) => db.doc('profiles/' + uid)
+export { register, registerWithGoogle, login, loginWithGoogle, logout };

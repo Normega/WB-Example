@@ -1,10 +1,10 @@
 import '../styles/LogIn.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login, loginWithGoogle } from 'actions';
+import { login, loginWithGoogle } from '../api/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import onlyGuest from 'components/hoc/onlyGuest';
 import { FcGoogle } from 'react-icons/fc';
+import { useAuthStore } from "../store/store";
 import db from '../db/index';
 
 const Login = () => {
@@ -13,6 +13,7 @@ const Login = () => {
     password: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
+  const { setUser, setIsAuth } = useAuthStore(store => store);
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -40,20 +41,27 @@ const Login = () => {
     }
   }
 
+  const updateAuthStore = (user, isAuth) => {
+    setUser(user);
+    setIsAuth(isAuth);
+  }
+
   const handleSubmit = async e => {
     e.preventDefault();
 
     try {
-      const uid = await login(formData);
-      await handleRedirect(uid);
+      const user = await login(formData);
+      updateAuthStore(user, true);
+      await handleRedirect(user.uid);
     } catch (e) {
       setErrorMessage(e);
     }
   };
 
   const handleGoogleLogin = async () => {
-    const uid = await loginWithGoogle();
-    await handleRedirect(uid);
+    const user = await loginWithGoogle();
+    updateAuthStore(user, true);
+    await handleRedirect(user.uid);
   }
 
   return (
@@ -99,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default onlyGuest(Login);
+export default Login;

@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 import annotationPlugin from "chartjs-plugin-annotation";
 import { useNavigate } from "react-router-dom";
 import { doc, collection, getDoc, getDocs } from "firebase/firestore";
-import { useStore } from "react-redux";
+import { useAuthStore } from "../store/store";
 import db from "../db/index";
 import formatDateString from "../helpers/formatDateString";
 import { getMoodStressLineData, getQuestionLineData, standardNormalData } from "data/chartData";
@@ -25,7 +25,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement,
     LineElement, Title, Tooltip, Legend, annotationPlugin);
 
 const UserDashboard = () => {
-    const uid = useStore().getState().auth.user?.uid;
+    const uid = useAuthStore(store => store.user.uid);
     const [moodData, setMoodData] = useState({});
     const [stressData, setStressData] = useState({});
     const [questionData, setQuestionData] = useState({

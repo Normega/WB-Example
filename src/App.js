@@ -1,28 +1,20 @@
 import React from "react";
-import initStore from "./store";
-import ServiceApp from "ServiceApp";
-import { Provider } from "react-redux";
+import Navbar from "components/Navbar";
+import Routes from "./Routes";
 import { BrowserRouter as Router } from "react-router-dom";
-import { onAuthStateChange, storeAuthUser } from "actions";
 
-const store = initStore();
-
-class App extends React.Component {
-  componentDidMount() {
-    onAuthStateChange((authUser) => {
-      store.dispatch(storeAuthUser(authUser));
-    });
-  }
-
-  render() {
-    return (
-      <Provider store={store}>
-        <Router>
-          <ServiceApp />
-        </Router>
-      </Provider>
-    );
-  }
+const App = () => {
+  return (
+    <Router>
+      <Navbar
+        loadFresh
+        id="navbar-main"
+      />
+      <Navbar
+        id='navbar-clone' />
+      <Routes />
+    </Router>
+  )
 }
 
 export default App;

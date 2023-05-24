@@ -8,8 +8,7 @@ export const login = loginData => api.login({ ...loginData });
 export const loginWithGoogle = () => api.loginWithGoogle();
 export const onAuthStateChange = onAuthCallback => api.onAuthStateChange(onAuthCallback);
 
-export const logout = () => dispatch =>
-    api.logout().then(_ => dispatch({ user: null, type: SET_AUTH_USER }));
+export const logout = () => api.logout();
 
 export const storeAuthUser = authUser => dispatch => {
     dispatch({ type: RESET_AUTH_STATE });

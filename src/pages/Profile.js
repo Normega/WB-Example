@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { Avatar } from "../components/avatarPage/avatar/avatar";
-import { useStore } from "react-redux";
+import { useAuthStore } from "../store/store";
 import ClipLoader from "react-spinners/ClipLoader";
 import getDateAndMonth from "helpers/getDateAndMonth";
 import db from "../db/index";
@@ -32,7 +32,7 @@ const Date = ({ date, day, dateString, selectedDate, handleClick }) => {
 };
 
 export default function Profile() {
-  const user = useStore().getState().auth.user;
+  const user = useAuthStore((store) => store.user);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState("");
   const [userData, setUserData] = useState({});
@@ -79,6 +79,7 @@ export default function Profile() {
         day={dayOfWeek}
         dateString={dateString}
         selectedDate={selectedDate}
+        key={formattedDate}
         handleClick={() => setSelectedDate(dateString)}
       />
     );
@@ -92,10 +93,6 @@ export default function Profile() {
     );
   }
 
-  if (avatarColorProps && avatarStyleProps) {
-    console.log(avatarColorProps, avatarStyleProps);
-  }
-
   return (
     <section className="profile-main-container">
       <div className="avatar-container">
@@ -105,7 +102,7 @@ export default function Profile() {
           {...avatarStyleProps}
           size="calc(25vh - 4px)"
         />
-        <h1 className="username-header">{user.fullName}</h1>
+        <h1 className="username-header">{user.fullName ?? user.displayName}</h1>
       </div>
       <div className="profile-info-container">
         <div className="daily-info-container">

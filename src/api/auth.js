@@ -122,7 +122,7 @@ export const login = async ({ email, password }) => {
 
   try {
     const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-    return userCredentials.user.uid;
+    return userCredentials.user;
   } catch {
     return Promise.reject('Incorrect email or password');
   }
@@ -176,7 +176,7 @@ export const loginWithGoogle = async () => {
       await createUserProfile(userProfile);
     }
 
-    return user.uid;
+    return user;
   } catch (error) {
     Promise.reject(error.message);
   }
@@ -198,5 +198,3 @@ export const getUserProfile = uid =>
     .doc(uid)
     .get()
     .then(snapshot => ({ uid, ...snapshot.data() }));
-
-// export const createUserRef = (uid) => db.doc('profiles/' + uid)

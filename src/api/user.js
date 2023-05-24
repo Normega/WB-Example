@@ -1,37 +1,35 @@
-import db from "../db/index";
-import { collection, getDocs, getDoc, doc } from "firebase/firestore";
-import formatDateString from "../helpers/formatDateString";
-import { calculateMean, calculateSD } from "../helpers/calculateDistribution";
+import db from '../db/index';
+import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
+import formatDateString from '../helpers/formatDateString';
+import { calculateMean, calculateSD } from '../helpers/calculateDistribution';
 
-const getCheckInData = async (uid) => {
+const getCheckInData = async uid => {
     const checkIns = {};
-    const checkInsSnapshot = await getDocs(
-        collection(db, "profiles", uid, "checkIns")
-    );
+    const checkInsSnapshot = await getDocs(collection(db, 'profiles', uid, 'checkIns'));
 
     checkInsSnapshot.docs
         .reverse() // order the documents by date in descending order
         .slice(0, 7) // get the 7 most recent survey
-        .forEach((doc) => {
+        .forEach(doc => {
             checkIns[doc.id] = doc.data();
         });
 
-    const selectedDate = checkInsSnapshot.docs[checkInsSnapshot.docs.length - 1].id
+    const selectedDate = checkInsSnapshot.docs[checkInsSnapshot.docs.length - 1].id;
 
     return {
         checkIns,
         selectedDate,
     };
-}
+};
 
-const getCheckInSurveyData = async (uid) => {
+const getCheckInSurveyData = async uid => {
     const moods = {};
     const stress = {};
     const awareness = {};
     const reactivity = {};
     const reappraisal = {};
 
-    const querySnapshot = await getDocs(collection(db, "profiles", uid, "checkIns"));
+    const querySnapshot = await getDocs(collection(db, 'profiles', uid, 'checkIns'));
 
     querySnapshot.forEach(doc => {
         moods[formatDateString(doc.id)] = doc.data().mood;
@@ -47,26 +45,26 @@ const getCheckInSurveyData = async (uid) => {
         awareness,
         reactivity,
         reappraisal,
-    }
-}
+    };
+};
 
-const getCheckInStatus = async (uid) => {
-    const docSnap = await getDoc(doc(db, "profiles", uid));
+const getCheckInStatus = async uid => {
+    const docSnap = await getDoc(doc(db, 'profiles', uid));
     return docSnap.data().checkin;
-}
+};
 
-const getMoodStressZScores = async (uid) => {
+const getMoodStressZScores = async uid => {
     // retrieve all mood and stress data across all users
     const allMoodData = [];
     const allStressData = [];
-    const profiles = await getDocs(collection(db, "profiles"));
+    const profiles = await getDocs(collection(db, 'profiles'));
 
     for (const profile of profiles.docs) {
-        const checkIns = await getDocs(collection(db, "profiles", profile.id, "checkIns"));
+        const checkIns = await getDocs(collection(db, 'profiles', profile.id, 'checkIns'));
         checkIns.forEach(doc => {
             allMoodData.push(doc.data().mood);
             allStressData.push(doc.data().stress);
-        })
+        });
     }
 
     // calculate mean and standard deviation
@@ -78,7 +76,7 @@ const getMoodStressZScores = async (uid) => {
     // calculate z-score for each user's mood and stress data
     const zScores = {};
 
-    const userCheckIns = await getDocs(collection(db, "profiles", uid, "checkIns"));
+    const userCheckIns = await getDocs(collection(db, 'profiles', uid, 'checkIns'));
     const latestMood = userCheckIns.docs[userCheckIns.docs.length - 1].data().mood;
     const latestStress = userCheckIns.docs[userCheckIns.docs.length - 1].data().stress;
 
@@ -86,16 +84,22 @@ const getMoodStressZScores = async (uid) => {
     zScores.stress = (latestStress - stressMean) / stressSD;
 
     return zScores;
-}
+};
 
-const getAvatarMetaData = async (uid) => {
-    const userDoc = await getDoc(doc(db, "profiles", uid));
+const getAvatarMetaData = async uid => {
+    const userDoc = await getDoc(doc(db, 'profiles', uid));
     const avatar = userDoc.data().avatar;
 
     return {
         avatarColors: avatar.colors,
         avatarStyles: avatar.styles,
-    }
-}
+    };
+};
 
-export { getCheckInData, getAvatarMetaData, getCheckInSurveyData, getCheckInStatus, getMoodStressZScores };
+export {
+    getCheckInData,
+    getAvatarMetaData,
+    getCheckInSurveyData,
+    getCheckInStatus,
+    getMoodStressZScores,
+};

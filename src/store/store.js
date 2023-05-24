@@ -9,8 +9,8 @@ const useAuthStore = create(
             setUser: user => set({ user }),
             setIsAuth: isAuth => set({ isAuth }),
         }),
-        { name: 'auth-storage', getStorage: () => localStorage }
-    )
+        { name: 'auth-storage', getStorage: () => localStorage },
+    ),
 );
 
 export { useAuthStore };

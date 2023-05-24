@@ -7,7 +7,7 @@ const Navbar = props => {
     const { setUser, setIsAuth, isAuth } = useAuthStore(store => store);
     const navigate = useNavigate();
 
-    const handleLogout = async () => {
+    const handleLogout = async() => {
         await logout();
         setUser(null);
         setIsAuth(false);

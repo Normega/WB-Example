@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "../styles/Hero.css";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Hero.css';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -14,12 +14,12 @@ const Hero = () => {
                         Measure your mental health and wellness with data-driven insights and
                         personalized feedback
                     </p>
-                    <button className='started-button' onClick={() => navigate("/register")}>
+                    <button className='started-button' onClick={() => navigate('/register')}>
                         Get Started
                     </button>
                 </div>
                 <div className='hero-right-container'>
-                    <img src={process.env.PUBLIC_URL + "/worker.svg"} alt='Description' />
+                    <img src={process.env.PUBLIC_URL + '/worker.svg'} alt='Description' />
                 </div>
             </section>
             <section className='hero-info-container'>

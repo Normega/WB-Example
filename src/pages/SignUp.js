@@ -1,17 +1,17 @@
-import "../styles/SignUp.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { register, registerWithGoogle } from "../api/auth";
-import { FcGoogle } from "react-icons/fc";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { register, registerWithGoogle } from '../api/auth';
+import { FcGoogle } from 'react-icons/fc';
+import '../styles/SignUp.css';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
-        email: "",
-        fullName: "",
-        password: "",
-        confirmPassword: "",
+        email: '',
+        fullName: '',
+        password: '',
+        confirmPassword: '',
     });
-    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleChange = e => {
@@ -27,7 +27,7 @@ const SignUp = () => {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            setErrorMessage("Passwords do not match!");
+            setErrorMessage('Passwords do not match!');
             return;
         }
 
@@ -39,22 +39,22 @@ const SignUp = () => {
                 password: formData.password,
                 fullName: formData.fullName,
             });
-            setErrorMessage("");
+            setErrorMessage('');
 
-            navigate("/avatar");
+            navigate('/avatar');
         } catch (error) {
             setErrorMessage(error);
             console.log(error);
         }
     };
 
-    const handleGoogleRegister = async () => {
+    const handleGoogleRegister = async() => {
         try {
             const res = await registerWithGoogle();
             if (res.isNewUser) {
-                navigate("/avatar");
+                navigate('/avatar');
             } else {
-                navigate("/");
+                navigate('/');
             }
         } catch (e) {
             console.log(e);
@@ -109,7 +109,7 @@ const SignUp = () => {
                 </form>
                 <div className='redirect'>
                     <p>Already have an account?</p>
-                    <a href='#' onClick={() => navigate("/login")}>
+                    <a href='#' onClick={() => navigate('/login')}>
                         Sign In
                     </a>
                 </div>

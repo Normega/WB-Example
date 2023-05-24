@@ -1,12 +1,12 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import ProfilePage from "./pages/Profile";
-import LoginPage from "./pages/Login";
-import SignUp from "pages/SignUp";
-import { AvatarCreationPage } from "pages/AvatarCreation";
-import CheckIn from "pages/CheckIn";
-import UserDashboard from "pages/UserDashboard";
-import Hero from "components/Hero";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import ProfilePage from './pages/Profile';
+import LoginPage from './pages/Login';
+import SignUp from './pages/SignUp';
+import { AvatarCreationPage } from './pages/AvatarCreation';
+import CheckIn from './pages/CheckIn';
+import UserDashboard from './pages/UserDashboard';
+import Hero from './components/Hero';
 
 const AppRoutes = () => (
     <Routes>

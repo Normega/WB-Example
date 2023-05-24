@@ -68,7 +68,7 @@ const getMoodStressBarOption = (zScore, title) => {
                 },
             },
         }
-    )
-}
+    );
+};
 
 export { moodStressOption, questionOption, getMoodStressBarOption };

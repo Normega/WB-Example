@@ -8,10 +8,10 @@ import { HexColorPicker } from "react-colorful";
 import { styles } from "components/avatarPage/avatarProps";
 import { selected_to_color } from "components/avatarPage/avatarProps";
 import { selected_to_style } from "components/avatarPage/avatarProps";
-import "./AvatarCreation.css";
 import { getAuth } from "firebase/auth";
-import db from "../db/index"
 import { doc, updateDoc } from "firebase/firestore";
+import db from "../db/index";
+import "../styles/AvatarCreation.css";
 
 /**
  * Description of Component

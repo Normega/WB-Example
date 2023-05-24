@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@tanstack/react-query": "^4.29.7",
         "chart.js": "^4.1.2",
         "chartjs-plugin-annotation": "^3.0.0",
         "firebase": "^9.14.0",
@@ -42,5 +43,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "@tanstack/react-query-devtools": "^4.29.7"
     }
 }

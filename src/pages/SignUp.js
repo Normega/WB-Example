@@ -1,7 +1,7 @@
 import "../styles/SignUp.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register, registerWithGoogle } from "actions";
+import { register, registerWithGoogle } from "../api/auth";
 import { FcGoogle } from "react-icons/fc";
 
 const SignUp = () => {

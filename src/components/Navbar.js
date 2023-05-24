@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/store';
-import { logout } from 'actions';
+import { logout } from '../api/auth';
 
 const Navbar = props => {
     const { setUser, setIsAuth, isAuth } = useAuthStore(store => store);

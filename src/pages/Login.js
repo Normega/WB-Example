@@ -1,7 +1,7 @@
 import '../styles/LogIn.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login, loginWithGoogle } from 'actions';
+import { login, loginWithGoogle } from '../api/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { FcGoogle } from 'react-icons/fc';
 import { useAuthStore } from "../store/store";

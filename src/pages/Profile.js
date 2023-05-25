@@ -60,8 +60,8 @@ export default function Profile() {
         <section className='profile-main-container'>
             <div className='avatar-container'>
                 <Avatar
-                    {...avatarQuery.data.avatarColors}
-                    {...avatarQuery.data.avatarStyles}
+                    {...avatarQuery.data?.avatarColors}
+                    {...avatarQuery.data?.avatarStyles}
                     size='calc(25vh - 4px)'
                 />
                 <h1 className='username-header'>{user.fullName ?? user.displayName}</h1>

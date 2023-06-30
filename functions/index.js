@@ -1,26 +1,11 @@
-// const functions = require("firebase-functions");
-// const nodemailer = require("nodemailer");
-const admin = require("firebase-admin");
-// const cors = require("cors")({
-//     origin: true,
-//     allowedHeaders: "Content-Type, Authorization",
-//     allowedMethods: "GET, POST",
-// });
+const admin = require('firebase-admin');
+const serviceAccount = require('./serviceAccoutKey.json');
 
-admin.initializeApp();
-// const db = admin.firestore();
+admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
 
-const mailHelper = require("./actions/mailHelper");
-const chInHelper = require("./actions/checkInHelper");
+const checkIn = require('./actions/checkIn');
+const mail = require('./actions/mail');
 
-// Export functions
-exports.sendMail = mailHelper.sendMail;
-exports.weeklySendMail = mailHelper.weeklySendMail;
-// testing
-// exports.collectEmails = mailHelper.collectEmails;
-
-
-exports.sendCheckIn = chInHelper.sendCheckIn;
-exports.resetCheckin = chInHelper.resetCheckin;
-exports.resetQuarterlyCheckin = chInHelper.resetQuarterlyCheckin;
-
+exports.sendEmail = mail.sendEmail;
+exports.resetCheckin = checkIn.resetCheckin;
+exports.resetQuarterlyCheckin = checkIn.resetQuarterlyCheckin;

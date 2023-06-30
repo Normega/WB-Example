@@ -30,9 +30,9 @@ exports.sendEmail = functions.pubsub
                 let emails = '';
 
                 querySnapshot.docs.forEach((doc, idx) => {
-                    emails += doc.data().email;
-                    if (idx < querySnapshot.docs.length - 1) {
-                        emails += ', ';
+                    const data = doc.data();
+                    if (data.receiveEmail) {
+                        emails += `${data.email}, `;
                     }
                 });
 

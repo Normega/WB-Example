@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs-2';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/store';
+import Switch from '../components/Switch';
 import { getMoodStressLineData, getQuestionLineData, standardNormalData } from '../data/chartData';
 import { moodStressOption, questionOption, getMoodStressBarOption } from '../data/chartOptions';
 import {
@@ -15,8 +16,8 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { useQuery } from '@tanstack/react-query';
-import { getCheckInSurveyData, getCheckInStatus, getMoodStressZScores } from '../api/user';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getCheckInSurveyData, getCheckInStatus, getEmailPreference, getMoodStressZScores, updateEmailPreference } from '../api/user';
 import ClipLoader from 'react-spinners/ClipLoader';
 import '../styles/UserDashboard.css';
 
@@ -33,6 +34,7 @@ ChartJS.register(
 
 const UserDashboard = () => {
     const uid = useAuthStore(store => store.user.uid);
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     const surveyQuery = useQuery({
@@ -45,12 +47,27 @@ const UserDashboard = () => {
         queryFn: () => getCheckInStatus(uid),
     });
 
+    const emailSubscriptionStatusQuery = useQuery({
+        queryKey: ['emailPreference', uid],
+        queryFn: () => getEmailPreference(uid),
+    });
+
     const zScoresQuery = useQuery({
         queryKey: ['zScores', uid],
         queryFn: () => getMoodStressZScores(uid),
     });
 
-    if (surveyQuery.isLoading || checkInStatusQuery.isLoading || zScoresQuery.isLoading) {
+    const { mutate: updateEmailSubscriptionStatus } = useMutation(updateEmailPreference, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['emailPreference', uid]);
+        },
+    });
+
+    const handleToggle = () => {
+        updateEmailSubscriptionStatus({ isToggled: emailSubscriptionStatusQuery.data, uid });
+    };
+
+    if (surveyQuery.isLoading || checkInStatusQuery.isLoading || emailSubscriptionStatusQuery.isLoading || zScoresQuery.isLoading) {
         return (
             <div className='loading'>
                 <ClipLoader
@@ -65,10 +82,16 @@ const UserDashboard = () => {
     return (
         <div className='dashboard-main'>
             <div className='dashboard-navigate'>
-                <h1>Navigate to Daily Check-In</h1>
-                <button onClick={() => navigate('/checkin')} disabled={checkInStatusQuery.data}>
-                    Click Here
-                </button>
+                <div className='navigate-checkin'>
+                    <h2>Navigate to Daily Check-In</h2>
+                    <button onClick={() => navigate('/checkin')} disabled={checkInStatusQuery.data}>
+                        Click Here
+                    </button>
+                </div>
+                <div className='navigate-email'>
+                    <h2>Subscribe to Daily Email Reminder</h2>
+                    <Switch isToggled={emailSubscriptionStatusQuery.data} onToggle={handleToggle}/>
+                </div>
             </div>
             <div>
                 <Line

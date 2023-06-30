@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../store/store';
 import '../styles/Hero.css';
 
 const Hero = () => {
+    const { isAuth } = useAuthStore(store => store);
     const navigate = useNavigate();
 
     return (
@@ -14,9 +16,17 @@ const Hero = () => {
                         Measure your mental health and wellness with data-driven insights and
                         personalized feedback
                     </p>
-                    <button className='started-button' onClick={() => navigate('/register')}>
-                        Get Started
-                    </button>
+                    {isAuth
+                        ? (
+                            <button className='started-button' onClick={() => navigate('/profile')}>
+                            View Profile
+                            </button>
+                        )
+                        : (
+                            <button className='started-button' onClick={() => navigate('/register')}>
+                            Get Started
+                            </button>
+                        )}
                 </div>
                 <div className='hero-right-container'>
                     <img src={process.env.PUBLIC_URL + '/worker.svg'} alt='Description' />

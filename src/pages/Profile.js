@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { getCheckInData, getAvatarMetaData } from '../api/user';
 import { Avatar } from '../components/avatarPage/avatar/avatar';
 import { useAuthStore } from '../store/store';
@@ -11,6 +12,7 @@ import '../styles/Profile.css';
 
 export default function Profile() {
     const user = useAuthStore(store => store.user);
+    const navigate = useNavigate();
     const [selectedDate, setSelectedDate] = useState('');
 
     const checkInQuery = useQuery({
@@ -58,7 +60,7 @@ export default function Profile() {
 
     return (
         <section className='profile-main-container'>
-            <div className='avatar-container'>
+            <div className='avatar-container' onClick={() => navigate('/avatar')}>
                 <Avatar
                     {...avatarQuery.data?.avatarColors}
                     {...avatarQuery.data?.avatarStyles}

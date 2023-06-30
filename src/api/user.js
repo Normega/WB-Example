@@ -1,5 +1,5 @@
 import db from '../db/index';
-import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc, updateDoc } from 'firebase/firestore';
 import formatDateString from '../helpers/formatDateString';
 import { calculateMean, calculateSD } from '../helpers/calculateDistribution';
 
@@ -53,6 +53,11 @@ const getCheckInStatus = async uid => {
     return docSnap.data().checkin;
 };
 
+const getEmailPreference = async uid => {
+    const docSnap = await getDoc(doc(db, 'profiles', uid));
+    return docSnap.data().receiveEmail;
+};
+
 const getMoodStressZScores = async uid => {
     // retrieve all mood and stress data across all users
     const allMoodData = [];
@@ -96,10 +101,18 @@ const getAvatarMetaData = async uid => {
     };
 };
 
+const updateEmailPreference = async({ isToggled, uid }) => {
+    await updateDoc(doc(db, 'profiles', uid), {
+        receiveEmail: !isToggled,
+    });
+};
+
 export {
     getCheckInData,
     getAvatarMetaData,
     getCheckInSurveyData,
     getCheckInStatus,
+    getEmailPreference,
     getMoodStressZScores,
+    updateEmailPreference,
 };

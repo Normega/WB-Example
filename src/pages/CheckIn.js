@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, increment, setDoc, updateDoc } from 'firebase/firestore';
 import { Navigate } from 'react-router-dom';
 import 'survey-core/defaultV2.min.css';
 import { StylesManager, Model } from 'survey-core';
@@ -68,6 +68,7 @@ const CheckIn = () => {
 
         // if the user has finished daily check-in, update the field from false to true
         await updateDoc(doc(db, 'profiles', uid), {
+            streaks: increment(1),
             checkin: true,
         });
     };
